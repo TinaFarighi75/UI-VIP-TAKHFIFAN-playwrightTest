@@ -1,0 +1,28 @@
+{
+  "name": "ui-core-playwrighttest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  "test": "playwright test",
+  "typecheck": "tsc --noEmit"
+}
+,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TinaFarighi75/UI-CORE-playwrightTest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/TinaFarighi75/UI-CORE-playwrightTest/issues"
+  },
+  "homepage": "https://github.com/TinaFarighi75/UI-CORE-playwrightTest#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2"
+  }
+}
