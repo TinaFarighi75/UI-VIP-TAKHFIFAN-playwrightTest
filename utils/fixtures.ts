@@ -1,20 +1,18 @@
-import { test as base, expect } from "@playwright/test";
-import { LoginAdmin } from "./login/loginAdminPannel";
+import { test as base } from "@playwright/test";
+import { LoginService } from "./login/loginAdminPannel";
 // import { VendorsPage } from "./classes/VendorsPage";
 
 type MyFixtures = {
-  loginAdmin: LoginAdmin;
+  loginAdminApi: LoginService;
   // vendorsPage: VendorsPage;
 };
 
 export const test = base.extend<MyFixtures>({
-  loginAdmin: async ({ page }, use) => {
-    await use(new LoginAdmin(page));
+  loginAdminApi: async ({ request }, use) => {
+    await use(new LoginService(request));
   },
 
-  // vendorsPage: async ({ page }, use) => {
-  //   await use(new VendorsPage(page));
-  // },
+
 });
 
-export { expect };
+export { expect } from "@playwright/test";

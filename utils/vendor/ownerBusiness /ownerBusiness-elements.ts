@@ -2,20 +2,9 @@ import type { Page } from '@playwright/test';
 
 import type { OwnerBusinessElements } from './ownerBusiness-types';
 
-export const createOwnerBusinessElements = (
-  page: Page,
-): OwnerBusinessElements => ({
-  vendorButton: page.getByRole('link', {
-    name: 'کسب و کارها',
-  }),
+export const createOwnerBusinessElements = (page: Page): OwnerBusinessElements => ({
 
-  vendorCreateButton: page.getByRole('link', {
-    name: 'ایجاد کسب و کار جدید',
-  }),
 
-  vendorCreateHeading: page.getByRole('heading', {
-    name: 'ایجاد کسب و کار جدید',
-  }),
 
   vendorCreateOwnerHeading: page.getByRole('heading', {
     name: '۱. اطلاعات صاحب کسب و کار',
@@ -59,9 +48,8 @@ export const createOwnerBusinessElements = (
     },
   ),
 
-  vendorCreateBusinessNameAlreadyRegisteredByMobile: page.getByRole('link', {
-    name: 'تریاکیانو - محمد حسین بهمن ابادی',
-  }),
+  vendorCreateBusinessNameAlreadyRegisteredByMobile: (businessName: string) =>
+    page.getByRole('link', { name: businessName }),
 
   vendorCreateBusinessOwnerInfoAlertWithoutSelectSource: page.getByText(
     'انتخاب منبع ضروری است',
@@ -69,4 +57,6 @@ export const createOwnerBusinessElements = (
       exact: true,
     },
   ),
+  vendorCreateBusinessOwnerInfoAvailableVendor: (vendorName: string) =>
+    page.getByRole('link', { name: vendorName }),
 });

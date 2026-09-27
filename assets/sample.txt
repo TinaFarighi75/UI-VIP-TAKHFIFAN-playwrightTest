@@ -1,0 +1,14 @@
+title
+panel
+Environment
+Steps to Reproduce
+Expected Result
+Actual Result
+Test Run Report
+Media
+CURL
+Additional Notes
+Assign
+Severity
+Priority
+Browser

@@ -1,9 +1,7 @@
 import type { Locator } from '@playwright/test';
 
 export type OwnerBusinessElements = {
-  vendorButton: Locator;
-  vendorCreateButton: Locator;
-  vendorCreateHeading: Locator;
+ 
   vendorCreateOwnerHeading: Locator;
   vendorOpenSectionOwnerInfo: Locator;
   vendorCreateSelectingSource: Locator;
@@ -13,6 +11,8 @@ export type OwnerBusinessElements = {
   vendorCreateOwnerMobile: Locator;
   vendorCreateAlertRequiredOwnerMobile: Locator;
   vendorCreateOwnerMobileAlertDuplicate: Locator;
-  vendorCreateBusinessNameAlreadyRegisteredByMobile: Locator;
   vendorCreateBusinessOwnerInfoAlertWithoutSelectSource: Locator;
+  vendorCreateBusinessOwnerInfoAvailableVendor: (vendorName: string) => Locator;
+  vendorCreateBusinessNameAlreadyRegisteredByMobile: (businessName: string) => Locator;
+
 };

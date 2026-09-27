@@ -81,28 +81,39 @@
 
 import { defineConfig, devices } from "@playwright/test";
 
+
+
 export default defineConfig({
-  testDir: "./tests",
+  testDir: './tests',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 1 : undefined,
+  reporter: 'html',
 
   use: {
-    baseURL: "https://stgiran-vip.takhfifan.com",
-    trace: "on-first-retry",
-    screenshot: "only-on-failure",
-    video: "retain-on-failure",
+    baseURL: 'https://stgiran-vip.takhfifan.com',
+    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
   },
 
   projects: [
+    // ۱. پروژه Setup که اول از همه لاگین رو انجام میده و فایل سشن رو می‌سازه
     {
-      name: "setup",
-      testMatch: /auth\.setup\.ts/,
+      name: 'setup',
+      testMatch: /.*auth\.setup\.ts/,
     },
+
+    // ۲. مرورگر اصلی تست‌ها که به setup وابسته است و سشن رو می‌خونه
     {
-      name: "chromium",
+      name: 'chromium',
       use: {
-        ...devices["Desktop Chrome"],
-        storageState: "playwright/.auth/user.json",
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
       },
-      dependencies: ["setup"],
+      dependencies: ['setup'],
+      testIgnore: /.*auth\.setup\.ts/, // جلوی اجرای دوباره setup در این پروژه رو می‌گیره
     },
   ],
 });
