@@ -11,13 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  // "include": [
-  //   "tests/**/*.ts",
-  //   "pages/**/*.ts",
-  //   "utils/**/*.ts",
-  //   "fixtures/**/*.ts",
-  //   "playwright.config.ts"
-  // ],
     "include": [
     "**/*.ts"
   ],
