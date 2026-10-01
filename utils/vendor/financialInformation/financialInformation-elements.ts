@@ -36,5 +36,9 @@ export const vendorCreateFinancialInformationElements = (page: Page): VendorCrea
     vendorCreateFinancialInformationNationalIdLegalInvalidAlert: page.getByText('شماره ملی باید 11 رقم باشد'),
     vendorCreateFinancialInformationNationalIdRealInvalidAlert: page.getByText('شماره ملی باید 10 رقم باشد'),
     vendorCreateFinancialInformationFidaCodeInvalidAlert: page.getByText('کد فراگیر باید 12 رقم باشد'),
+    vendorCreateFinancialInformationNationalIdInvalidFormatAlert: page.getByText("کدملی نامعتبر است"),
+    // اضافه کردن به آبجکت المان‌ها:
+vendorCreateInvalidLongitudeAlert: page.getByText('رکورد نامعتبر است طول جغرافیایی انتخاب شده در ایران نیست'),
+
   };
 };

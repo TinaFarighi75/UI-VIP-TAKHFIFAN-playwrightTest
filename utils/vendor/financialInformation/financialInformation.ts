@@ -121,6 +121,12 @@ export class VendorCreateFinancialInformationSection {
     return this.financial.vendorCreateFinancialInformationFidaCodeInvalidAlert;
   }
 
+  getVendorCreateFinancialInformationNationalIdInvalidFormatAlert(): Locator {
+    return this.financial.vendorCreateFinancialInformationNationalIdInvalidFormatAlert;
+  }
+  getVendorCreateInvalidLongitudeAlert(): Locator {
+  return this.financial.vendorCreateInvalidLongitudeAlert;
+}
   //---------------------------SECTION ACTIONS---------------------------------------
 
   /**
@@ -262,6 +268,12 @@ export class VendorCreateFinancialInformationSection {
     await expect(this.getVendorCreateFinancialInformationFidaCodeInvalidAlert()).toBeVisible();
   }
 
+  async expectNationalIdInvalidFormatAlertVisible(): Promise<void> {
+    await expect(this.getVendorCreateFinancialInformationNationalIdInvalidFormatAlert()).toBeVisible();
+  }
+  async expectInvalidLongitudeAlertVisible(): Promise<void> {
+  await expect(this.getVendorCreateInvalidLongitudeAlert()).toBeVisible();
+}
   //---------------------------VISIBILITY & STATE METHODS----------------------------
 
   async isEconomicCodeInputVisible(): Promise<boolean> {

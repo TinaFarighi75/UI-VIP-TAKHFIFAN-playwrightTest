@@ -34,4 +34,7 @@ export type VendorCreateFinancialInformationElements = {
   vendorCreateFinancialInformationNationalIdLegalInvalidAlert: Locator;
   vendorCreateFinancialInformationNationalIdRealInvalidAlert: Locator;
   vendorCreateFinancialInformationFidaCodeInvalidAlert: Locator;
+  vendorCreateFinancialInformationNationalIdInvalidFormatAlert:Locator;
+    vendorCreateInvalidLongitudeAlert: Locator;
+
 };
