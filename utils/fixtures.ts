@@ -1,10 +1,9 @@
 import { test as base } from "@playwright/test";
 import { LoginService } from "./login/loginAdminPannel";
-// import { VendorsPage } from "./classes/VendorsPage";
 
 type MyFixtures = {
   loginAdminApi: LoginService;
-  // vendorsPage: VendorsPage;
+
 };
 
 export const test = base.extend<MyFixtures>({
