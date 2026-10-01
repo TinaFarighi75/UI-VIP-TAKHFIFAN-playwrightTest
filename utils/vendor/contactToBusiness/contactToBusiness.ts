@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-import { contactToBusinessElements } from './contactToBussiness-elements';
+import { contactToBusinessElements } from './contactToBusiness-elements';
 import type { ContactToBusinessElements } from './contactToBusiness-types';
 
 export interface FillLocationParams {
