@@ -1,0 +1,49 @@
+{
+  "cookies": [
+    {
+      "name": "_ga",
+      "value": "GA1.2.647177520.1790841366",
+      "domain": ".takhfifan.com",
+      "path": "/",
+      "expires": 1825401365.508381,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gid",
+      "value": "GA1.2.130546908.1790841366",
+      "domain": ".takhfifan.com",
+      "path": "/",
+      "expires": 1790927765,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gat",
+      "value": "1",
+      "domain": ".takhfifan.com",
+      "path": "/",
+      "expires": 1790841425,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://stgiran-vip.takhfifan.com",
+      "localStorage": [
+        {
+          "name": "user",
+          "value": "{\"user\":{\"id\":311464,\"email\":\"tinafarighi75@gmail.com\",\"mobile\":null,\"authentication_token\":\"uzYRTcxmw56FeG5C24xA\",\"role_name\":\"admin\",\"access_new_panel\":false,\"login_url\":\"https://stgiran-vip.takhfifan.com/panel/redirect/?token=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKbGVIQWlPakUzT1RBNE5ERTJOaklzSW5WelpYSmZhV1FpT2pNeE1UUTJOQ3dpWlcxaGFXd2lPaUowYVc1aFptRnlhV2RvYVRjMVFHZHRZV2xzTG1OdmJTSjkuelprNFQyMTFfekp4eDVkNWk3S2pYN0FkZUNGZlRVTFdhVTVTanlYSVd6UQ==\",\"sign_in_count\":48301,\"renderer_token\":\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNDdjMGRiNi1iNTAzLTQ4ZmQtODRhYy0yNzAyZDRkYjU0YmQiLCJzdWIiOiIxMCIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTc5MDg0MTM2MywiZXhwIjoxNzkwODQ0OTYzfQ.DvGbDOyVGw0L0tCQS1G7UWip-Eae1yzgl1nb9L-DfNw\"}}"
+        },
+        {
+          "name": "persist:root",
+          "value": "{\"authUser\":\"{\\\"user\\\":null,\\\"loading\\\":false,\\\"otp_token\\\":\\\"\\\",\\\"phone\\\":\\\"\\\",\\\"formData\\\":null}\",\"ticket\":\"{\\\"customer\\\":{},\\\"order\\\":{}}\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
+        }
+      ]
+    }
+  ]
+}
