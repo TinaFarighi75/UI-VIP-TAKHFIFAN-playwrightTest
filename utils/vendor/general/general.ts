@@ -1,8 +1,10 @@
 import type { Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { createGeneralElements } from "./general-elements";
 import type { GeneralObject } from "./general-types";
-import { promises } from "node:dns";
+
+type UploadResult = "success" | "failed";
 
 export class General {
   protected readonly general: GeneralObject;
@@ -10,7 +12,8 @@ export class General {
   constructor(page: Page) {
     this.general = createGeneralElements(page);
   }
-  //---------------------------ELEMENTS---------------------------------------
+
+  // ---------------------------ELEMENTS (GETTERS)----------------------------
 
   getVendorsButton(): Locator {
     return this.general.vendorsButton;
@@ -19,9 +22,11 @@ export class General {
   getVendorsListButton(): Locator {
     return this.general.vendorsList;
   }
+
   getVendorCreateButton(): Locator {
     return this.general.vendorCreateBusinessButton;
   }
+
   getImageUploadingToastMessage(): Locator {
     return this.general.vendorCreateBusinessToastMessageInsertingImage;
   }
@@ -29,107 +34,257 @@ export class General {
   getImageUploadSuccessToastMessage(): Locator {
     return this.general.vendorCreateBusinessToastMessageSuccessInsertingImage;
   }
+
   getCloseSection(): Locator {
     return this.general.vendorCloseSection;
   }
 
-  getDeleteFile():Locator{
-    return this.general.vendorCreateBusinessFileDelete
+  getDeleteFile(): Locator {
+    return this.general.vendorCreateBusinessFileDelete;
   }
-  getVendorCreateTitlePage():Locator{
-    return this.general.vendorCreateTitleOfPage
-  }
-  getSubmitButton():Locator{
-    return this.general.submitButton
-  }
-  getSaveSelectlogo():Locator{
-    return this.general.saveSelectlogo
-  }
-  getSaveSelectCover():Locator{
-    return this.general.saveSelectlogo
-  }
-  getDeleteLogo():Locator{
-    return this.general.deleteLogo
-  }
-  getDeleteCover():Locator{
-    return this.general.deleteCover
-  }
-  getFailedInsertPicAllert():Locator{
-    return this.general.vendorCreateBusinessToastMessageFailedInsertingImage
-  }
-  //---------------------------METHODS---------------------------------------
 
-  async goToCreateVendorPage():Promise<void>{
-    await this.getVendorCreateButton().click()
+  getVendorCreateTitlePage(): Locator {
+    return this.general.vendorCreateTitleOfPage;
+  }
 
+  getSubmitButton(): Locator {
+    return this.general.submitButton;
   }
-  async goToListOfBusinessPage():Promise<void>{
-    await this.getVendorsListButton().click()
+
+  getSaveSelectlogo(): Locator {
+    return this.general.saveSelectlogo;
   }
-  async selectVendorsButton():Promise<void>{
-    await this.getVendorsButton().click()
+
+  getSaveSelectCover(): Locator {
+    // FIX: قبلاً اشتباه saveSelectlogo برمی‌گرداند
+    return this.general.saveSelectCover;
   }
-  async submit(): Promise<void>{
-    await this.getSubmitButton().click()
+
+  getDeleteLogo(): Locator {
+    return this.general.deleteLogo;
   }
+
+  getDeleteCover(): Locator {
+    return this.general.deleteCover;
+  }
+
+  getFailedInsertPicAllert(): Locator {
+    return this.general.vendorCreateBusinessToastMessageFailedInsertingImage;
+  }
+
+  // ---------------------------ACTIONS (YOUR METHODS)------------------------
+
+  async goToCreateVendorPage(): Promise<void> {
+    await this.getVendorCreateButton().click();
+  }
+
+  async goToListOfBusinessPage(): Promise<void> {
+    await this.getVendorsListButton().click();
+  }
+
+  async selectVendorsButton(): Promise<void> {
+    await this.getVendorsButton().click();
+  }
+
+  async submit(): Promise<void> {
+    await this.getSubmitButton().click();
+  }
+
   async closeSection(): Promise<void> {
     await this.getCloseSection().click();
   }
 
   async deleteVendorCreateBusinessFile(): Promise<void> {
-    await this.general.vendorCreateBusinessFileDelete.click();
+    // همان رفتاری که داشتی، ولی از getter استفاده می‌کنیم
+    await this.getDeleteFile().click();
   }
 
+  // actions جدید اما عمومی
+  async saveLogoFromDialog(): Promise<void> {
+    await this.getSaveSelectlogo().click();
+  }
+
+  async saveCoverFromDialog(): Promise<void> {
+    await this.getSaveSelectCover().click();
+  }
+
+  async deleteLogo(): Promise<void> {
+    await this.getDeleteLogo().click();
+  }
+
+  async deleteCover(): Promise<void> {
+    await this.getDeleteCover().click();
+  }
+
+  // ---------------------------WAITS (YOUR METHODS)--------------------------
+
   async waitForImageUploadSuccessToastMessage(): Promise<void> {
-    await this.general.vendorCreateBusinessToastMessageSuccessInsertingImage.waitFor(
-      {
-        state: "visible",
-      },
-    );
+    await this.getImageUploadSuccessToastMessage().waitFor({ state: "visible" });
   }
 
   async waitForImageUploadingToastMessage(): Promise<void> {
-    await this.general.vendorCreateBusinessToastMessageInsertingImage.waitFor({
-      state: "visible",
-    });
+    await this.getImageUploadingToastMessage().waitFor({ state: "visible" });
   }
+
   async waitForImageUploadingToastMessageToDisappear(): Promise<void> {
-    await this.general.vendorCreateBusinessToastMessageInsertingImage.waitFor({
-      state: "hidden",
-    });
+    await this.getImageUploadingToastMessage().waitFor({ state: "hidden" });
   }
+
   async waitForImageUploadSuccessToastMessageToDisappear(): Promise<void> {
-    await this.general.vendorCreateBusinessToastMessageSuccessInsertingImage.waitFor(
-      {
-        state: "hidden",
-      },
-    );
+    await this.getImageUploadSuccessToastMessage().waitFor({ state: "hidden" });
   }
+
   async waitForImageUploadSuccessToastMessageToBeVisible(): Promise<void> {
-    await this.general.vendorCreateBusinessToastMessageSuccessInsertingImage.waitFor(
-      {
-        state: "visible",
-      },
-    );
+    await this.getImageUploadSuccessToastMessage().waitFor({ state: "visible" });
   }
 
   async waitForImageUploadingToastMessageToBeVisible(): Promise<void> {
-    await this.general.vendorCreateBusinessToastMessageInsertingImage.waitFor({
-      state: "visible",
-    });
+    await this.getImageUploadingToastMessage().waitFor({ state: "visible" });
   }
-    async waitForImageUplodingFailedVisible(): Promise<void> {
-    await this.general.vendorCreateBusinessToastMessageFailedInsertingImage.waitFor(
-      {
-        state: "visible",
-      },
-    );
+
+  async waitForImageUplodingFailedVisible(): Promise<void> {
+    await this.getFailedInsertPicAllert().waitFor({ state: "visible" });
   }
-      async waitForImageUplodingFailedDisappear(): Promise<void> {
-    await this.general.vendorCreateBusinessToastMessageFailedInsertingImage.waitFor(
-      {
-        state: "hidden",
-      },
-    );
+
+  async waitForImageUplodingFailedDisappear(): Promise<void> {
+    await this.getFailedInsertPicAllert().waitFor({ state: "hidden" });
+  }
+
+  // waits جدید و سناریومحور
+  async waitForAnyUploadResultVisible(): Promise<UploadResult> {
+    const success = this.getImageUploadSuccessToastMessage();
+    const failed = this.getFailedInsertPicAllert();
+
+    const result = await Promise.race([
+      success.waitFor({ state: "visible" }).then(() => "success" as const),
+      failed.waitFor({ state: "visible" }).then(() => "failed" as const),
+    ]);
+
+    return result;
+  }
+
+  /**
+   * سناریو: انتظار برای پایان فرآیند آپلود (موفق یا ناموفق)
+   * - به سرعت پیام موفقیت یا خطا را تشخیص می‌دهد
+   * - در صورت وجود پیام "در حال بارگذاری"، تا مخفی شدن آن و آمدن نتیجه صبر می‌کند
+   */
+  async waitForUploadProcessToFinish(timeout = 15000): Promise<UploadResult> {
+    const successToast = this.getImageUploadSuccessToastMessage();
+    const failedToast = this.getFailedInsertPicAllert();
+
+    // همزمان منتظر اولین توست نتیجه (موفق یا ناموفق) می‌مانیم
+    const result = await Promise.race([
+      successToast.waitFor({ state: "visible", timeout }).then(() => "success" as const),
+      failedToast.waitFor({ state: "visible", timeout }).then(() => "failed" as const),
+    ]);
+
+    // اگر پیام "در حال بارگذاری" هنوز باز بود، صبر می‌کنیم برود تا UI کاملاً آزاد شود
+    await this.getImageUploadingToastMessage()
+      .waitFor({ state: "hidden", timeout: 3000 })
+      .catch(() => {});
+
+    return result;
+  }
+
+  async waitForAllUploadToastsToDisappear(): Promise<void> {
+    await Promise.all([
+      this.getImageUploadingToastMessage().waitFor({ state: "hidden" }).catch(() => {}),
+      this.getImageUploadSuccessToastMessage().waitFor({ state: "hidden" }).catch(() => {}),
+      this.getFailedInsertPicAllert().waitFor({ state: "hidden" }).catch(() => {}),
+    ]);
+  }
+
+  // ---------------------------ASSERTIONS-----------------------------------
+
+  async expectOnCreateBusinessPage(): Promise<void> {
+    await expect(this.getVendorCreateTitlePage()).toBeVisible();
+  }
+
+  async expectSubmitButtonEnabled(): Promise<void> {
+    await expect(this.getSubmitButton()).toBeEnabled();
+  }
+
+  async expectSubmitButtonDisabled(): Promise<void> {
+    await expect(this.getSubmitButton()).toBeDisabled();
+  }
+
+  async expectUploadSuccessToastVisible(): Promise<void> {
+    await expect(this.getImageUploadSuccessToastMessage()).toBeVisible();
+  }
+
+  async expectUploadFailedToastVisible(): Promise<void> {
+    await expect(this.getFailedInsertPicAllert()).toBeVisible();
+  }
+
+  async expectNoUploadToastsVisible(): Promise<void> {
+    await expect(this.getImageUploadingToastMessage()).toBeHidden();
+    await expect(this.getImageUploadSuccessToastMessage()).toBeHidden();
+    await expect(this.getFailedInsertPicAllert()).toBeHidden();
+  }
+
+  // ---------------------------FLOWS (SCENARIOS)----------------------------
+
+  /**
+   * سناریو: رفتن به صفحه ایجاد کسب‌وکار از منو
+   * (برای اکثر تست‌ها مفید)
+   */
+  async openCreateBusinessFromMenu(): Promise<void> {
+    await this.selectVendorsButton();
+    await this.goToCreateVendorPage();
+    await this.expectOnCreateBusinessPage();
+  }
+
+  /**
+   * سناریو: رفتن به لیست کسب‌وکارها از منو
+   */
+  async openVendorsListFromMenu(): Promise<void> {
+    await this.selectVendorsButton();
+    await this.goToListOfBusinessPage();
+  }
+
+  /**
+   * سناریو: ثبت فرم + انتظار برای نتیجه آپلود (اگر آپلودی در جریان باشد)
+   * - اگر فرآیند آپلود toast داشته باشد، نتیجه success/failed را برمی‌گرداند
+   * - اگر toast نیاید، صرفاً submit می‌کند و null برمی‌گرداند
+   */
+  async submitAndWaitForPossibleUploadResult(): Promise<UploadResult | null> {
+    await this.submit();
+
+    // اگر هیچ toastی ظاهر نشد، سریع برگرد
+    const anyToastAppeared = await Promise.race([
+      this.getImageUploadingToastMessage().waitFor({ state: "visible" }).then(() => true),
+      this.getImageUploadSuccessToastMessage().waitFor({ state: "visible" }).then(() => true),
+      this.getFailedInsertPicAllert().waitFor({ state: "visible" }).then(() => true),
+      new Promise<boolean>((resolve) => setTimeout(() => resolve(false), 2500)),
+    ]);
+
+    if (!anyToastAppeared) return null;
+
+    return await this.waitForUploadProcessToFinish();
+  }
+
+  /**
+   * سناریو: ذخیره لوگو از دیالوگ + انتظار برای نتیجه آپلود
+   */
+  async saveLogoAndWaitForUploadResult(): Promise<UploadResult> {
+    await this.saveLogoFromDialog();
+    return await this.waitForUploadProcessToFinish();
+  }
+
+  /**
+   * سناریو: ذخیره کاور از دیالوگ + انتظار برای نتیجه آپلود
+   */
+  async saveCoverAndWaitForUploadResult(): Promise<UploadResult> {
+    await this.saveCoverFromDialog();
+    return await this.waitForUploadProcessToFinish();
+  }
+
+  /**
+   * سناریو: حذف فایل (عمومی) + بستن سکشن (اگر لازم باشد)
+   * چون locator حذف‌ها مشترک است، فعلاً همین رفتار عمومی را نگه می‌داریم.
+   */
+  async deleteFileAndCloseSection(): Promise<void> {
+    await this.deleteVendorCreateBusinessFile();
+    await this.closeSection();
   }
 }

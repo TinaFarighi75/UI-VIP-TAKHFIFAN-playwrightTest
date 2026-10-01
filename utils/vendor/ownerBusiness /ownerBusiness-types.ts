@@ -1,7 +1,6 @@
-import type { Locator } from '@playwright/test';
+import { type Locator } from '@playwright/test';
 
-export type OwnerBusinessElements = {
- 
+export interface OwnerBusinessElements {
   vendorCreateOwnerHeading: Locator;
   vendorOpenSectionOwnerInfo: Locator;
   vendorCreateSelectingSource: Locator;
@@ -14,5 +13,4 @@ export type OwnerBusinessElements = {
   vendorCreateBusinessOwnerInfoAlertWithoutSelectSource: Locator;
   vendorCreateBusinessOwnerInfoAvailableVendor: (vendorName: string) => Locator;
   vendorCreateBusinessNameAlreadyRegisteredByMobile: (businessName: string) => Locator;
-
-};
+}

@@ -14,5 +14,5 @@ export type GeneralObject = {
   saveSelectCover: Locator;
   deleteLogo: Locator;
   deleteCover: Locator;
-  vendorCreateBusinessToastMessageFailedInsertingImage:Locator
+  vendorCreateBusinessToastMessageFailedInsertingImage: Locator;
 };

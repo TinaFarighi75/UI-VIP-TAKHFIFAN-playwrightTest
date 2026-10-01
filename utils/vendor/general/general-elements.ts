@@ -3,19 +3,31 @@ import type { Page } from '@playwright/test';
 import type { GeneralObject } from './general-types';
 
 export const createGeneralElements = (page: Page): GeneralObject => ({
-
   vendorCloseSection: page.locator('.simple-icon-arrow-up'),
+
+  // delete buttons (بهتر است بعداً scoped شوند، فعلاً حذف/تغییر key نمی‌دهم)
   vendorCreateBusinessFileDelete: page.locator('.sc-AxiKw'),
-  vendorCreateBusinessToastMessageInsertingImage: page.getByText('درحال بارگزاری تصویر'),
-  vendorCreateBusinessToastMessageSuccessInsertingImage: page.getByText('بارگذاری با موفقیت انجام شد'),
+  deleteLogo: page.locator('.sc-AxiKw'),
+  deleteCover: page.locator('.sc-AxiKw'),
+
+  // toasts
+  vendorCreateBusinessToastMessageInsertingImage: page.getByText('درحال بارگزاری تصویر', { exact: false }),
+  vendorCreateBusinessToastMessageSuccessInsertingImage: page.getByText('بارگذاری با موفقیت انجام شد', { exact: false }),
+  vendorCreateBusinessToastMessageFailedInsertingImage: page.getByText('دربارگزاری خطایی رخ داده است', { exact: false }),
+
+  // navigation
   vendorsButton: page.getByRole('link', { name: 'کسب و کارها' }),
-  vendorsList:page.getByRole('link', { name: 'لیست کسب و کارها' }),
-  vendorCreateBusinessButton:page.getByRole('link', { name: 'ایجاد کسب و کار جدید' }),
+  vendorsList: page.getByRole('link', { name: 'لیست کسب و کارها' }),
+  vendorCreateBusinessButton: page.getByRole('link', { name: 'ایجاد کسب و کار جدید' }),
+
+  // page title
   vendorCreateTitleOfPage: page.getByRole('heading', { name: 'ایجاد کسب و کار جدید' }),
-  submitButton:page.getByRole('button', { name: 'ثبت' }),
-  saveSelectlogo:page.getByRole('dialog').getByRole('button', { name: 'ذخیره', exact: true }),
-  saveSelectCover:page.getByRole('dialog').getByRole('button', { name: 'ذخیره', exact: true }),
-  deleteLogo:page.locator('.sc-AxiKw'),
-  deleteCover:page.locator('.sc-AxiKw'),
-  vendorCreateBusinessToastMessageFailedInsertingImage:page.getByText("دربارگزاری خطایی رخ داده است")
+
+  // actions
+  submitButton: page.getByRole('button', { name: 'ثبت' }),
+
+  // dialog save buttons
+  // (اگر واقعاً دو دیالوگ مختلف دارید، بعداً باید اینها را scoped کنیم؛ فعلاً همان ساختار شما حفظ شد)
+  saveSelectlogo: page.getByRole('dialog').getByRole('button', { name: 'ذخیره', exact: true }),
+  saveSelectCover: page.getByRole('dialog').getByRole('button', { name: 'ذخیره', exact: true }),
 });
