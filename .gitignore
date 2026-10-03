@@ -9,3 +9,5 @@ git.sh
 
 auth.setup.ts
 loginAdminPannel.ts
+*.tar
+*.tar
