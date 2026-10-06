@@ -11,3 +11,6 @@ auth.setup.ts
 loginAdminPannel.ts
 *.tar
 *.tar
+
+# Playwright
+/playwright/.auth/
