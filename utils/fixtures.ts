@@ -2,19 +2,12 @@ import { test as base } from "@playwright/test";
 import { LoginService } from "./login/loginAdminPannel";
 import { Auth } from "./auth/auth";
 import { users } from "../test-data/user-data";
-import { SelectExpert } from "./syncFlow/selectExpert/selectExpert";
-import { ExpertReview } from "./syncFlow/expertReview/expertReview";
-import { Completed } from "./syncFlow/completed/completed";
-import { SupervisorsApproval } from "./syncFlow/supervisorsApproval/supervisorsApproval";
-
+import { SyncFlow } from "./syncFlow/syncFlow";
 type MyFixtures = {
   loginAdminApi: LoginService;
   authApi: Auth;
   authTokenAdmin: string;
-  selectExpertApi: SelectExpert;
-  expertReviewApi: ExpertReview;
-  completedApi: Completed;
-  supervisorsApprovalApi: SupervisorsApproval;
+  syncFlowApi: SyncFlow;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -30,17 +23,9 @@ export const test = base.extend<MyFixtures>({
     const loginData = await authApi.getValidLoginResponselogin();
     await use(loginData.token);
   },
-  selectExpertApi: async ({ request }, use) => {
-    await use(new SelectExpert(request));
-  },
-  expertReviewApi: async ({ request }, use) => {
-    await use(new ExpertReview(request));
-  },
-  completedApi: async ({ request }, use) => {
-    await use(new Completed(request));
-  },
-  supervisorsApprovalApi: async ({ request }, use) => {
-    await use(new SupervisorsApproval(request));
+
+  syncFlowApi: async ({ request }, use) => {
+    await use(new SyncFlow(request));
   },
 });
 
