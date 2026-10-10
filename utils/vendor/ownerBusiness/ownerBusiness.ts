@@ -1,8 +1,9 @@
-import type { Locator, Page } from '@playwright/test';
-import { expect } from '@playwright/test';
+//utils/vendor/ownerBusiness/ownerBusiness.ts
+import type { Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
-import { createOwnerBusinessElements } from './ownerBusiness-elements';
-import type { OwnerBusinessElements } from './ownerBusiness-types';
+import { createOwnerBusinessElements } from "./ownerBusiness-elements";
+import type { OwnerBusinessElements } from "./ownerBusiness-types";
 
 export class OwnerBusinessSection {
   private readonly ownerBusiness: OwnerBusinessElements;
@@ -49,16 +50,23 @@ export class OwnerBusinessSection {
     return this.ownerBusiness.vendorCreateOwnerMobileAlertDuplicate;
   }
 
-  getVendorBusinessNameAlreadyRegisteredByMobile(businessName: string): Locator {
-    return this.ownerBusiness.vendorCreateBusinessNameAlreadyRegisteredByMobile(businessName);
+  getVendorBusinessNameAlreadyRegisteredByMobile(
+    businessName: string,
+  ): Locator {
+    return this.ownerBusiness.vendorCreateBusinessNameAlreadyRegisteredByMobile(
+      businessName,
+    );
   }
 
   getVendorBusinessOwnerInfoAlertWithoutSelectSource(): Locator {
-    return this.ownerBusiness.vendorCreateBusinessOwnerInfoAlertWithoutSelectSource;
+    return this.ownerBusiness
+      .vendorCreateBusinessOwnerInfoAlertWithoutSelectSource;
   }
 
   getVendorAvailableVendor(vendorName: string): Locator {
-    return this.ownerBusiness.vendorCreateBusinessOwnerInfoAvailableVendor(vendorName);
+    return this.ownerBusiness.vendorCreateBusinessOwnerInfoAvailableVendor(
+      vendorName,
+    );
   }
 
   //---------------------------METHODS (ACTIONS)------------------------------
@@ -89,7 +97,9 @@ export class OwnerBusinessSection {
   }
 
   async clickAlreadyRegisteredBusiness(businessName: string): Promise<void> {
-    await this.getVendorBusinessNameAlreadyRegisteredByMobile(businessName).click();
+    await this.getVendorBusinessNameAlreadyRegisteredByMobile(
+      businessName,
+    ).click();
   }
 
   async clickAvailableVendor(vendorName: string): Promise<void> {
@@ -99,19 +109,19 @@ export class OwnerBusinessSection {
   //---------------------------WAITS------------------------------------------
 
   async waitForOwnerSectionHeadingVisible(): Promise<void> {
-    await this.getVendorOwnerHeading().waitFor({ state: 'visible' });
+    await this.getVendorOwnerHeading().waitFor({ state: "visible" });
   }
 
   async waitForSourceSelectorVisible(): Promise<void> {
-    await this.getVendorSelectingSource().waitFor({ state: 'visible' });
+    await this.getVendorSelectingSource().waitFor({ state: "visible" });
   }
 
   async waitForOwnerNameVisible(): Promise<void> {
-    await this.getVendorOwnerName().waitFor({ state: 'visible' });
+    await this.getVendorOwnerName().waitFor({ state: "visible" });
   }
 
   async waitForOwnerMobileVisible(): Promise<void> {
-    await this.getVendorOwnerMobile().waitFor({ state: 'visible' });
+    await this.getVendorOwnerMobile().waitFor({ state: "visible" });
   }
 
   //---------------------------ASSERTIONS-------------------------------------
@@ -129,11 +139,16 @@ export class OwnerBusinessSection {
   }
 
   async expectSourceRequiredAlertVisible(): Promise<void> {
-    await expect(this.getVendorBusinessOwnerInfoAlertWithoutSelectSource()).toBeVisible();
+    await expect(
+      this.getVendorBusinessOwnerInfoAlertWithoutSelectSource(),
+    ).toBeVisible();
   }
 
   async expectDuplicateMobileAlertVisible(): Promise<void> {
-    await expect(this.getVendorOwnerMobileAlertDuplicate()).toBeVisible();
+    // 👈 تایم‌اوت ۱۵ ثانیه برای منتظر ماندن پاسخ API استیجینگ
+    await expect(this.getVendorOwnerMobileAlertDuplicate()).toBeVisible({
+      timeout: 15000,
+    });
   }
 
   async expectOwnerNameValue(ownerName: string): Promise<void> {
@@ -152,6 +167,7 @@ export class OwnerBusinessSection {
    */
   async openOwnerSectionAndWaitUntilReady(): Promise<void> {
     await this.openOwnerInformationSection();
+    await this.openOwnerInformationSection();
     await this.waitForOwnerSectionHeadingVisible();
     await this.waitForOwnerNameVisible();
     await this.waitForOwnerMobileVisible();
@@ -161,9 +177,12 @@ export class OwnerBusinessSection {
   /**
    * سناریو: پر کردن نام و موبایل (بدون انتخاب منبع)
    */
-  async fillOwnerInfoFlow(params: { ownerName: string; ownerMobile: string }): Promise<void> {
+  async fillOwnerInfoFlow(params: {
+    ownerName: string;
+    ownerMobile: string | number;
+  }): Promise<void> {
     await this.fillOwnerName(params.ownerName);
-    await this.fillOwnerMobile(params.ownerMobile);
+    await this.fillOwnerMobile(String(params.ownerMobile));
   }
 
   /**
@@ -171,7 +190,7 @@ export class OwnerBusinessSection {
    */
   async fillOwnerInfoAndSelectSourceFlow(params: {
     ownerName: string;
-    ownerMobile: string;
+    ownerMobile: string | number;
   }): Promise<void> {
     await this.fillOwnerInfoFlow(params);
     await this.selectOwnerInformationSource();
@@ -214,15 +233,18 @@ export class OwnerBusinessSection {
     await this.fillOwnerName(params.ownerName);
     await this.fillOwnerMobile(params.duplicateMobile);
 
-    // اگر پیام بعد از blur می‌آید:
-    await this.getVendorOwnerMobile().blur().catch(() => {});
+    // 👈 اضافه کردن Tab بلافاصله بعد از وارد کردن شماره برای تریگر شدن رویداد blur
+    await this.getVendorOwnerMobile().press("Tab");
+
     await this.expectDuplicateMobileAlertVisible();
   }
 
   /**
    * سناریو: کلیک روی کسب‌وکارهایی که با موبایل نمایش داده می‌شوند
    */
-  async selectBusinessFromAlreadyRegisteredListFlow(businessName: string): Promise<void> {
+  async selectBusinessFromAlreadyRegisteredListFlow(
+    businessName: string,
+  ): Promise<void> {
     await this.clickAlreadyRegisteredBusiness(businessName);
   }
 

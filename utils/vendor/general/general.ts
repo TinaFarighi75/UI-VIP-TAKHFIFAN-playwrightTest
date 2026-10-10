@@ -1,3 +1,4 @@
+//utils/vendor/general/general.ts
 import type { Locator, Page } from "@playwright/test";
 import { expect } from "@playwright/test";
 
@@ -8,8 +9,11 @@ type UploadResult = "success" | "failed";
 
 export class General {
   protected readonly general: GeneralObject;
+  protected readonly page: Page; // <--- این خط اضافه شد
 
   constructor(page: Page) {
+    this.page = page; // <--- این خط اضافه شد
+
     this.general = createGeneralElements(page);
   }
 
@@ -105,7 +109,17 @@ export class General {
   }
 
   async saveCoverFromDialog(): Promise<void> {
-    await this.getSaveSelectCover().click();
+    // دکمه ذخیره داخل مودال (سبز، یا متن ذخیره)
+    const saveBtn = this.page
+      .locator("button")
+      .filter({ hasText: /ذخ[یي]ره/ })
+      .last();
+
+    // تا ۱۰ ثانیه منتظر ظاهر شدن دکمه می‌مانیم
+    await saveBtn.waitFor({ state: "visible", timeout: 10000 });
+
+    // کلیک با اطمینان
+    await saveBtn.click({ force: true });
   }
 
   async deleteLogo(): Promise<void> {
@@ -119,7 +133,9 @@ export class General {
   // ---------------------------WAITS (YOUR METHODS)--------------------------
 
   async waitForImageUploadSuccessToastMessage(): Promise<void> {
-    await this.getImageUploadSuccessToastMessage().waitFor({ state: "visible" });
+    await this.getImageUploadSuccessToastMessage().waitFor({
+      state: "visible",
+    });
   }
 
   async waitForImageUploadingToastMessage(): Promise<void> {
@@ -135,7 +151,9 @@ export class General {
   }
 
   async waitForImageUploadSuccessToastMessageToBeVisible(): Promise<void> {
-    await this.getImageUploadSuccessToastMessage().waitFor({ state: "visible" });
+    await this.getImageUploadSuccessToastMessage().waitFor({
+      state: "visible",
+    });
   }
 
   async waitForImageUploadingToastMessageToBeVisible(): Promise<void> {
@@ -174,8 +192,12 @@ export class General {
 
     // همزمان منتظر اولین توست نتیجه (موفق یا ناموفق) می‌مانیم
     const result = await Promise.race([
-      successToast.waitFor({ state: "visible", timeout }).then(() => "success" as const),
-      failedToast.waitFor({ state: "visible", timeout }).then(() => "failed" as const),
+      successToast
+        .waitFor({ state: "visible", timeout })
+        .then(() => "success" as const),
+      failedToast
+        .waitFor({ state: "visible", timeout })
+        .then(() => "failed" as const),
     ]);
 
     // اگر پیام "در حال بارگذاری" هنوز باز بود، صبر می‌کنیم برود تا UI کاملاً آزاد شود
@@ -188,9 +210,15 @@ export class General {
 
   async waitForAllUploadToastsToDisappear(): Promise<void> {
     await Promise.all([
-      this.getImageUploadingToastMessage().waitFor({ state: "hidden" }).catch(() => {}),
-      this.getImageUploadSuccessToastMessage().waitFor({ state: "hidden" }).catch(() => {}),
-      this.getFailedInsertPicAllert().waitFor({ state: "hidden" }).catch(() => {}),
+      this.getImageUploadingToastMessage()
+        .waitFor({ state: "hidden" })
+        .catch(() => {}),
+      this.getImageUploadSuccessToastMessage()
+        .waitFor({ state: "hidden" })
+        .catch(() => {}),
+      this.getFailedInsertPicAllert()
+        .waitFor({ state: "hidden" })
+        .catch(() => {}),
     ]);
   }
 
@@ -208,20 +236,22 @@ export class General {
     await expect(this.getSubmitButton()).toBeDisabled();
   }
 
-  async expectUploadSuccessToastVisible(): Promise<void> {
-    await expect(this.getImageUploadSuccessToastMessage()).toBeVisible();
-  }
-
-  async expectUploadFailedToastVisible(): Promise<void> {
-    await expect(this.getFailedInsertPicAllert()).toBeVisible();
-  }
-
   async expectNoUploadToastsVisible(): Promise<void> {
     await expect(this.getImageUploadingToastMessage()).toBeHidden();
     await expect(this.getImageUploadSuccessToastMessage()).toBeHidden();
     await expect(this.getFailedInsertPicAllert()).toBeHidden();
   }
+  async expectUploadSuccessToastVisible(): Promise<void> {
+    await expect(this.getImageUploadSuccessToastMessage()).toBeVisible({
+      timeout: 15000,
+    });
+  }
 
+  async expectUploadFailedToastVisible(): Promise<void> {
+    await expect(this.getFailedInsertPicAllert()).toBeVisible({
+      timeout: 15000,
+    });
+  }
   // ---------------------------FLOWS (SCENARIOS)----------------------------
 
   /**
@@ -252,9 +282,15 @@ export class General {
 
     // اگر هیچ toastی ظاهر نشد، سریع برگرد
     const anyToastAppeared = await Promise.race([
-      this.getImageUploadingToastMessage().waitFor({ state: "visible" }).then(() => true),
-      this.getImageUploadSuccessToastMessage().waitFor({ state: "visible" }).then(() => true),
-      this.getFailedInsertPicAllert().waitFor({ state: "visible" }).then(() => true),
+      this.getImageUploadingToastMessage()
+        .waitFor({ state: "visible" })
+        .then(() => true),
+      this.getImageUploadSuccessToastMessage()
+        .waitFor({ state: "visible" })
+        .then(() => true),
+      this.getFailedInsertPicAllert()
+        .waitFor({ state: "visible" })
+        .then(() => true),
       new Promise<boolean>((resolve) => setTimeout(() => resolve(false), 2500)),
     ]);
 

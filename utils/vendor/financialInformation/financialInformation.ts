@@ -1,10 +1,12 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+//utils/vendor/financialInformation/financialInformation.ts
 
-import { vendorCreateFinancialInformationElements } from './financialInformation-elements';
+import { expect, type Locator, type Page } from "@playwright/test";
+
+import { vendorCreateFinancialInformationElements } from "./financialInformation-elements";
 import type {
   BusinessTypeValue,
   VendorCreateFinancialInformationElements,
-} from './financialInformation-types';
+} from "./financialInformation-types";
 
 // ----------------------------- Params (Options Object) -----------------------------
 
@@ -89,11 +91,13 @@ export class VendorCreateFinancialInformationSection {
 
   // Alerts / required
   getVendorCreateFinancialInformationNationalIdRequiredAlert(): Locator {
-    return this.financial.vendorCreateFinancialInformationNationalIdRequiredAlert;
+    return this.financial
+      .vendorCreateFinancialInformationNationalIdRequiredAlert;
   }
 
   getVendorCreateFinancialInformationGivenNameRequiredAlert(): Locator {
-    return this.financial.vendorCreateFinancialInformationGivenNameRequiredAlert;
+    return this.financial
+      .vendorCreateFinancialInformationGivenNameRequiredAlert;
   }
 
   getVendorCreateFinancialInformationSurnameRequiredAlert(): Locator {
@@ -101,7 +105,8 @@ export class VendorCreateFinancialInformationSection {
   }
 
   getVendorCreateFinancialInformationEconomicCodeRequiredAlert(): Locator {
-    return this.financial.vendorCreateFinancialInformationEconomicCodeRequiredAlert;
+    return this.financial
+      .vendorCreateFinancialInformationEconomicCodeRequiredAlert;
   }
 
   // invalid validations
@@ -110,11 +115,13 @@ export class VendorCreateFinancialInformationSection {
   }
 
   getVendorCreateFinancialInformationNationalIdLegalInvalidAlert(): Locator {
-    return this.financial.vendorCreateFinancialInformationNationalIdLegalInvalidAlert;
+    return this.financial
+      .vendorCreateFinancialInformationNationalIdLegalInvalidAlert;
   }
 
   getVendorCreateFinancialInformationNationalIdRealInvalidAlert(): Locator {
-    return this.financial.vendorCreateFinancialInformationNationalIdRealInvalidAlert;
+    return this.financial
+      .vendorCreateFinancialInformationNationalIdRealInvalidAlert;
   }
 
   getVendorCreateFinancialInformationFidaCodeInvalidAlert(): Locator {
@@ -122,11 +129,12 @@ export class VendorCreateFinancialInformationSection {
   }
 
   getVendorCreateFinancialInformationNationalIdInvalidFormatAlert(): Locator {
-    return this.financial.vendorCreateFinancialInformationNationalIdInvalidFormatAlert;
+    return this.financial
+      .vendorCreateFinancialInformationNationalIdInvalidFormatAlert;
   }
   getVendorCreateInvalidLongitudeAlert(): Locator {
-  return this.financial.vendorCreateInvalidLongitudeAlert;
-}
+    return this.financial.vendorCreateInvalidLongitudeAlert;
+  }
   //---------------------------SECTION ACTIONS---------------------------------------
 
   /**
@@ -143,7 +151,9 @@ export class VendorCreateFinancialInformationSection {
   }
 
   async selectBusinessType(value: BusinessTypeValue): Promise<void> {
-    await this.getVendorCreateFinancialInformationBusinessTypeSelect().selectOption(value);
+    await this.getVendorCreateFinancialInformationBusinessTypeSelect().selectOption(
+      value,
+    );
   }
 
   async fillNationalId(value: string): Promise<void> {
@@ -163,7 +173,9 @@ export class VendorCreateFinancialInformationSection {
   }
 
   async fillBankAccount(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationBankAccountInput().fill(value);
+    await this.getVendorCreateFinancialInformationBankAccountInput().fill(
+      value,
+    );
   }
 
   async fillSheba(value: string): Promise<void> {
@@ -171,7 +183,9 @@ export class VendorCreateFinancialInformationSection {
   }
 
   async fillEconomicCode(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationEconomicCodeInput().fill(value);
+    await this.getVendorCreateFinancialInformationEconomicCodeInput().fill(
+      value,
+    );
   }
 
   async clickShebaInquiry(): Promise<void> {
@@ -181,99 +195,143 @@ export class VendorCreateFinancialInformationSection {
   //---------------------------WAITS (STABILITY)-------------------------------------
 
   async waitForFinancialInformationHeaderVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationHeader()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationHeader(),
+    ).toBeVisible();
   }
 
   async waitForBusinessTypeSelectVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationBusinessTypeSelect()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationBusinessTypeSelect(),
+    ).toBeVisible();
   }
 
   //---------------------------ASSERTIONS--------------------------------------------
 
   async expectFinancialInformationHeaderVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationHeader()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationHeader(),
+    ).toBeVisible();
   }
 
   async expectBusinessTypeTitleVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationBusinessTypeTitle()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationBusinessTypeTitle(),
+    ).toBeVisible();
   }
 
   async expectDocumentsUploadHintVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationDocumentsUploadHint()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationDocumentsUploadHint(),
+    ).toBeVisible();
   }
 
   async expectBusinessTypeValue(value: BusinessTypeValue): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationBusinessTypeSelect()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateFinancialInformationBusinessTypeSelect(),
+    ).toHaveValue(value);
   }
 
   async expectNationalIdValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationNationalIdInput()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateFinancialInformationNationalIdInput(),
+    ).toHaveValue(value);
   }
 
   async expectFidaCodeValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationFidaCodeInput()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateFinancialInformationFidaCodeInput(),
+    ).toHaveValue(value);
   }
 
   async expectGivenNameValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationGivenNameInput()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateFinancialInformationGivenNameInput(),
+    ).toHaveValue(value);
   }
 
   async expectSurnameValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationSurnameInput()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateFinancialInformationSurnameInput(),
+    ).toHaveValue(value);
   }
 
   async expectBankAccountValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationBankAccountInput()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateFinancialInformationBankAccountInput(),
+    ).toHaveValue(value);
   }
 
   async expectShebaValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationShebaInput()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateFinancialInformationShebaInput(),
+    ).toHaveValue(value);
   }
 
   async expectEconomicCodeValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationEconomicCodeInput()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateFinancialInformationEconomicCodeInput(),
+    ).toHaveValue(value);
   }
 
   // Required alerts
   async expectNationalIdRequiredAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationNationalIdRequiredAlert()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationNationalIdRequiredAlert(),
+    ).toBeVisible();
   }
 
   async expectGivenNameRequiredAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationGivenNameRequiredAlert()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationGivenNameRequiredAlert(),
+    ).toBeVisible();
   }
 
   async expectSurnameRequiredAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationSurnameRequiredAlert()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationSurnameRequiredAlert(),
+    ).toBeVisible();
   }
 
   async expectEconomicCodeRequiredAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationEconomicCodeRequiredAlert()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationEconomicCodeRequiredAlert(),
+    ).toBeVisible();
   }
 
   // Invalid alerts/toast
   async expectShebaInvalidToastVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationShebaInvalidToast()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationShebaInvalidToast(),
+    ).toBeVisible();
   }
 
   async expectNationalIdInvalidAlertForLegalVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationNationalIdLegalInvalidAlert()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationNationalIdLegalInvalidAlert(),
+    ).toBeVisible();
   }
 
   async expectNationalIdInvalidAlertForRealVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationNationalIdRealInvalidAlert()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationNationalIdRealInvalidAlert(),
+    ).toBeVisible();
   }
 
   async expectFidaCodeInvalidAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationFidaCodeInvalidAlert()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationFidaCodeInvalidAlert(),
+    ).toBeVisible();
   }
 
   async expectNationalIdInvalidFormatAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateFinancialInformationNationalIdInvalidFormatAlert()).toBeVisible();
+    await expect(
+      this.getVendorCreateFinancialInformationNationalIdInvalidFormatAlert(),
+    ).toBeVisible();
   }
   async expectInvalidLongitudeAlertVisible(): Promise<void> {
-  await expect(this.getVendorCreateInvalidLongitudeAlert()).toBeVisible();
-}
+    await expect(this.getVendorCreateInvalidLongitudeAlert()).toBeVisible();
+  }
   //---------------------------VISIBILITY & STATE METHODS----------------------------
 
   async isEconomicCodeInputVisible(): Promise<boolean> {
@@ -325,7 +383,9 @@ export class VendorCreateFinancialInformationSection {
    *   - legal => economicCode (اجباری)
    *   - foreign => fidaCode
    */
-  async fillFinancialInformation(params: FillFinancialInformationParams): Promise<void> {
+  async fillFinancialInformation(
+    params: FillFinancialInformationParams,
+  ): Promise<void> {
     if (params.businessType !== undefined) {
       await this.selectBusinessType(params.businessType);
     }
@@ -369,21 +429,27 @@ export class VendorCreateFinancialInformationSection {
   /**
    * سناریوی حقوقی (legal): انتخاب حقوقی + پر کردن economicCode (اگر داده شود)
    */
-  async fillLegalBusinessFinancialInfo(params: Omit<FillFinancialInformationParams, 'businessType'>): Promise<void> {
-    await this.fillFinancialInformation({ ...params, businessType: 'legal' });
+  async fillLegalBusinessFinancialInfo(
+    params: Omit<FillFinancialInformationParams, "businessType">,
+  ): Promise<void> {
+    await this.fillFinancialInformation({ ...params, businessType: "legal" });
   }
 
   /**
    * سناریوی حقیقی (real)
    */
-  async fillRealBusinessFinancialInfo(params: Omit<FillFinancialInformationParams, 'businessType'>): Promise<void> {
-    await this.fillFinancialInformation({ ...params, businessType: 'real' });
+  async fillRealBusinessFinancialInfo(
+    params: Omit<FillFinancialInformationParams, "businessType">,
+  ): Promise<void> {
+    await this.fillFinancialInformation({ ...params, businessType: "real" });
   }
 
   /**
    * سناریوی اتباع خارجی (foreign)
    */
-  async fillForeignBusinessFinancialInfo(params: Omit<FillFinancialInformationParams, 'businessType'>): Promise<void> {
-    await this.fillFinancialInformation({ ...params, businessType: 'foreign' });
+  async fillForeignBusinessFinancialInfo(
+    params: Omit<FillFinancialInformationParams, "businessType">,
+  ): Promise<void> {
+    await this.fillFinancialInformation({ ...params, businessType: "foreign" });
   }
 }

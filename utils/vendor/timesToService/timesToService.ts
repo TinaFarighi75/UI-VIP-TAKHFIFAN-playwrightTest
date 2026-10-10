@@ -1,6 +1,7 @@
-import { expect, type Locator, type Page } from '@playwright/test';
-import { timesToServiceElements } from './timesToService-elements';
-import type { TimesToServiceElements, TimeType } from './timesToService-types';
+//utils/vendor/timesToService/timesToService.ts
+import { expect, type Locator, type Page } from "@playwright/test";
+import { timesToServiceElements } from "./timesToService-elements";
+import type { TimesToServiceElements, TimeType } from "./timesToService-types";
 
 export class TimesToServiceSection {
   private readonly timesToService: TimesToServiceElements;
@@ -28,11 +29,15 @@ export class TimesToServiceSection {
   }
 
   getVendorCreateTimesToServiceDayStartTimeInput(dayName: string): Locator {
-    return this.timesToService.vendorCreateTimesToServiceDayStartTimeInput(dayName);
+    return this.timesToService.vendorCreateTimesToServiceDayStartTimeInput(
+      dayName,
+    );
   }
 
   getVendorCreateTimesToServiceDayEndTimeInput(dayName: string): Locator {
-    return this.timesToService.vendorCreateTimesToServiceDayEndTimeInput(dayName);
+    return this.timesToService.vendorCreateTimesToServiceDayEndTimeInput(
+      dayName,
+    );
   }
 
   getActiveTimePickerPopup(): Locator {
@@ -40,27 +45,33 @@ export class TimesToServiceSection {
   }
 
   getTimePickerFirstBoxInput(): Locator {
-    return this.timesToService.vendorCreateTimesToServiceTimePickerFirstBoxInput;
+    return this.timesToService
+      .vendorCreateTimesToServiceTimePickerFirstBoxInput;
   }
 
   getTimePickerSecondBoxInput(): Locator {
-    return this.timesToService.vendorCreateTimesToServiceTimePickerSecondBoxInput;
+    return this.timesToService
+      .vendorCreateTimesToServiceTimePickerSecondBoxInput;
   }
 
   getTimePickerFirstBoxArrowUp(): Locator {
-    return this.timesToService.vendorCreateTimesToServiceTimePickerFirstBoxArrowUp;
+    return this.timesToService
+      .vendorCreateTimesToServiceTimePickerFirstBoxArrowUp;
   }
 
   getTimePickerFirstBoxArrowDown(): Locator {
-    return this.timesToService.vendorCreateTimesToServiceTimePickerFirstBoxArrowDown;
+    return this.timesToService
+      .vendorCreateTimesToServiceTimePickerFirstBoxArrowDown;
   }
 
   getTimePickerSecondBoxArrowUp(): Locator {
-    return this.timesToService.vendorCreateTimesToServiceTimePickerSecondBoxArrowUp;
+    return this.timesToService
+      .vendorCreateTimesToServiceTimePickerSecondBoxArrowUp;
   }
 
   getTimePickerSecondBoxArrowDown(): Locator {
-    return this.timesToService.vendorCreateTimesToServiceTimePickerSecondBoxArrowDown;
+    return this.timesToService
+      .vendorCreateTimesToServiceTimePickerSecondBoxArrowDown;
   }
 
   getTimePickerSubmitButton(): Locator {
@@ -74,6 +85,7 @@ export class TimesToServiceSection {
   }
 
   async clickTimesToServiceHeader(): Promise<void> {
+    await this.getVendorCreateTimesToServiceHeader().click();
     await this.getVendorCreateTimesToServiceHeader().click();
   }
 
@@ -102,15 +114,15 @@ export class TimesToServiceSection {
   }
 
   async toggleAllDaysSwitch(): Promise<void> {
-    await this.toggleDaySwitch('همه روزها');
+    await this.toggleDaySwitch("همه روزها");
   }
 
   async checkAllDaysSwitch(): Promise<void> {
-    await this.checkDaySwitch('همه روزها');
+    await this.checkDaySwitch("همه روزها");
   }
 
   async uncheckAllDaysSwitch(): Promise<void> {
-    await this.uncheckDaySwitch('همه روزها');
+    await this.uncheckDaySwitch("همه روزها");
   }
 
   //---------------------------TIME PICKER ACTIONS----------------------------
@@ -130,7 +142,10 @@ export class TimesToServiceSection {
     await expect(this.getActiveTimePickerPopup()).toBeHidden();
   }
 
-  async fillTimePickerValues(firstValue: string, secondValue: string): Promise<void> {
+  async fillTimePickerValues(
+    firstValue: string,
+    secondValue: string,
+  ): Promise<void> {
     await this.getTimePickerFirstBoxInput().fill(firstValue);
     await this.getTimePickerSecondBoxInput().fill(secondValue);
   }
@@ -154,8 +169,13 @@ export class TimesToServiceSection {
   /**
    * تنظیم زمان روی اینپوت باز شده با وارد کردن مقادیر و کلیک روی تایید
    */
-  async setTime(dayName: string, type: TimeType, firstValue: string, secondValue: string): Promise<void> {
-    if (type === 'start') {
+  async setTime(
+    dayName: string,
+    type: TimeType,
+    firstValue: string,
+    secondValue: string,
+  ): Promise<void> {
+    if (type === "start") {
       await this.openStartTimePicker(dayName);
     } else {
       await this.openEndTimePicker(dayName);
@@ -164,12 +184,20 @@ export class TimesToServiceSection {
     await this.clickTimePickerSubmit();
   }
 
-  async setStartTime(dayName: string, firstValue: string, secondValue: string): Promise<void> {
-    await this.setTime(dayName, 'start', firstValue, secondValue);
+  async setStartTime(
+    dayName: string,
+    firstValue: string,
+    secondValue: string,
+  ): Promise<void> {
+    await this.setTime(dayName, "start", firstValue, secondValue);
   }
 
-  async setEndTime(dayName: string, firstValue: string, secondValue: string): Promise<void> {
-    await this.setTime(dayName, 'end', firstValue, secondValue);
+  async setEndTime(
+    dayName: string,
+    firstValue: string,
+    secondValue: string,
+  ): Promise<void> {
+    await this.setTime(dayName, "end", firstValue, secondValue);
   }
 
   //---------------------------ASSERTIONS-------------------------------------
@@ -179,47 +207,75 @@ export class TimesToServiceSection {
   }
 
   async expectDayLabelVisible(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDayLabel(dayName)).toBeVisible();
+    await expect(
+      this.getVendorCreateTimesToServiceDayLabel(dayName),
+    ).toBeVisible();
   }
 
   async expectDaySwitchToBeChecked(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDaySwitch(dayName)).toBeChecked();
+    await expect(
+      this.getVendorCreateTimesToServiceDaySwitch(dayName),
+    ).toBeChecked();
   }
 
   async expectDaySwitchToBeUnchecked(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDaySwitch(dayName)).not.toBeChecked();
+    await expect(
+      this.getVendorCreateTimesToServiceDaySwitch(dayName),
+    ).not.toBeChecked();
   }
 
   async expectDaySwitchToBeDisabled(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDaySwitch(dayName)).toBeDisabled();
+    await expect(
+      this.getVendorCreateTimesToServiceDaySwitch(dayName),
+    ).toBeDisabled();
   }
 
   async expectDaySwitchToBeEnabled(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDaySwitch(dayName)).toBeEnabled();
+    await expect(
+      this.getVendorCreateTimesToServiceDaySwitch(dayName),
+    ).toBeEnabled();
   }
 
   async expectDayStartTimeInputsDisabled(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDayStartTimeInput(dayName)).toBeDisabled();
+    await expect(
+      this.getVendorCreateTimesToServiceDayStartTimeInput(dayName),
+    ).toBeDisabled();
   }
 
   async expectDayEndTimeInputsDisabled(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDayEndTimeInput(dayName)).toBeDisabled();
+    await expect(
+      this.getVendorCreateTimesToServiceDayEndTimeInput(dayName),
+    ).toBeDisabled();
   }
 
   async expectDayStartTimeInputsEnabled(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDayStartTimeInput(dayName)).toBeEnabled();
+    await expect(
+      this.getVendorCreateTimesToServiceDayStartTimeInput(dayName),
+    ).toBeEnabled();
   }
 
   async expectDayEndTimeInputsEnabled(dayName: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDayEndTimeInput(dayName)).toBeEnabled();
+    await expect(
+      this.getVendorCreateTimesToServiceDayEndTimeInput(dayName),
+    ).toBeEnabled();
   }
 
-  async expectDayStartTimeValue(dayName: string, expectedTime: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDayStartTimeInput(dayName)).toHaveValue(expectedTime);
+  async expectDayStartTimeValue(
+    dayName: string,
+    expectedTime: string,
+  ): Promise<void> {
+    await expect(
+      this.getVendorCreateTimesToServiceDayStartTimeInput(dayName),
+    ).toHaveValue(expectedTime);
   }
 
-  async expectDayEndTimeValue(dayName: string, expectedTime: string): Promise<void> {
-    await expect(this.getVendorCreateTimesToServiceDayEndTimeInput(dayName)).toHaveValue(expectedTime);
+  async expectDayEndTimeValue(
+    dayName: string,
+    expectedTime: string,
+  ): Promise<void> {
+    await expect(
+      this.getVendorCreateTimesToServiceDayEndTimeInput(dayName),
+    ).toHaveValue(expectedTime);
   }
 
   async expectTimePickerPopupVisible(): Promise<void> {
@@ -249,11 +305,15 @@ export class TimesToServiceSection {
   }
 
   async isDayStartTimeInputDisabled(dayName: string): Promise<boolean> {
-    return this.getVendorCreateTimesToServiceDayStartTimeInput(dayName).isDisabled();
+    return this.getVendorCreateTimesToServiceDayStartTimeInput(
+      dayName,
+    ).isDisabled();
   }
 
   async isDayEndTimeInputDisabled(dayName: string): Promise<boolean> {
-    return this.getVendorCreateTimesToServiceDayEndTimeInput(dayName).isDisabled();
+    return this.getVendorCreateTimesToServiceDayEndTimeInput(
+      dayName,
+    ).isDisabled();
   }
 
   async isTimePickerPopupVisible(): Promise<boolean> {
@@ -261,10 +321,14 @@ export class TimesToServiceSection {
   }
 
   async getDayStartTimeInputValue(dayName: string): Promise<string> {
-    return this.getVendorCreateTimesToServiceDayStartTimeInput(dayName).inputValue();
+    return this.getVendorCreateTimesToServiceDayStartTimeInput(
+      dayName,
+    ).inputValue();
   }
 
   async getDayEndTimeInputValue(dayName: string): Promise<string> {
-    return this.getVendorCreateTimesToServiceDayEndTimeInput(dayName).inputValue();
+    return this.getVendorCreateTimesToServiceDayEndTimeInput(
+      dayName,
+    ).inputValue();
   }
 }

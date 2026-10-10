@@ -6,7 +6,7 @@ export type UrlConfig = {
   urlEditBusiness: (businessId: string | number) => string;
 };
 
-export const Urls: UrlConfig = {
+export const urls: UrlConfig = {
   urlWebsite: "/pwa/login",
   urlPanel: "/panel/app/dashboards/",
   urlCreateVendor: "/panel/app/dashboards/business/create",

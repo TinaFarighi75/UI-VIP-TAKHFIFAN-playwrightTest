@@ -1,7 +1,8 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+//utils/vendor/contactToBusiness/contactToBusiness.ts
+import { expect, type Locator, type Page } from "@playwright/test";
 
-import { contactToBusinessElements } from './contactToBusiness-elements';
-import type { ContactToBusinessElements } from './contactToBusiness-types';
+import { contactToBusinessElements } from "./contactToBusiness-elements";
+import type { ContactToBusinessElements } from "./contactToBusiness-types";
 
 export interface FillLocationParams {
   longitude?: string;
@@ -52,8 +53,12 @@ export class ContactToBusinessSection {
     return this.contactToBusiness.vendorCreateContactToBusinessProvince;
   }
 
-  getVendorCreateContactToBusinessProvinceSelectOptions(provinceName: string): Locator {
-    return this.contactToBusiness.vendorCreateContactToBusinessProvinceSelectOptions(provinceName);
+  getVendorCreateContactToBusinessProvinceSelectOptions(
+    provinceName: string,
+  ): Locator {
+    return this.contactToBusiness.vendorCreateContactToBusinessProvinceSelectOptions(
+      provinceName,
+    );
   }
 
   getVendorCreateContactToBusinessCity(): Locator {
@@ -61,23 +66,33 @@ export class ContactToBusinessSection {
   }
 
   getVendorCreateContactToBusinessCitySelectOptions(cityName: string): Locator {
-    return this.contactToBusiness.vendorCreateContactToBusinessCitySelectOptions(cityName);
+    return this.contactToBusiness.vendorCreateContactToBusinessCitySelectOptions(
+      cityName,
+    );
   }
 
   getVendorCreateContactToBusinessRegion(): Locator {
     return this.contactToBusiness.vendorCreateContactToBusinessRegion;
   }
 
-  getVendorCreateContactToBusinessRegionSelectOptions(regionName: string): Locator {
-    return this.contactToBusiness.vendorCreateContactToBusinessRegionSelectOptions(regionName);
+  getVendorCreateContactToBusinessRegionSelectOptions(
+    regionName: string,
+  ): Locator {
+    return this.contactToBusiness.vendorCreateContactToBusinessRegionSelectOptions(
+      regionName,
+    );
   }
 
   getVendorCreateContactToBusinessNeighborhood(): Locator {
     return this.contactToBusiness.vendorCreateContactToBusinessNeighborhood;
   }
 
-  getVendorCreateContactToBusinessNeighborhoodSelectOptions(neighborhoodName: string): Locator {
-    return this.contactToBusiness.vendorCreateContactToBusinessNeighborhoodSelectOptions(neighborhoodName);
+  getVendorCreateContactToBusinessNeighborhoodSelectOptions(
+    neighborhoodName: string,
+  ): Locator {
+    return this.contactToBusiness.vendorCreateContactToBusinessNeighborhoodSelectOptions(
+      neighborhoodName,
+    );
   }
 
   getVendorCreateContactToBusinessAddress(): Locator {
@@ -105,7 +120,8 @@ export class ContactToBusinessSection {
   }
 
   getVendorCreateContactToBusinessTellIsWrongAllert(): Locator {
-    return this.contactToBusiness.vendorCreateContactToBusinessTellIsWrongAllert;
+    return this.contactToBusiness
+      .vendorCreateContactToBusinessTellIsWrongAllert;
   }
 
   getVendorCreateContactToBusinessLongitudeAllert(): Locator {
@@ -125,7 +141,8 @@ export class ContactToBusinessSection {
   }
 
   getVendorCreateContactToBusinessPersianKeyBoardAllert(): Locator {
-    return this.contactToBusiness.vendorCreateContactToBusinessPersianKeyBoardAllert;
+    return this.contactToBusiness
+      .vendorCreateContactToBusinessPersianKeyBoardAllert;
   }
 
   //---------------------------ACTIONS----------------------------------------
@@ -160,22 +177,30 @@ export class ContactToBusinessSection {
 
   async selectProvince(provinceName: string): Promise<void> {
     await this.getVendorCreateContactToBusinessProvince().click();
-    await this.getVendorCreateContactToBusinessProvinceSelectOptions(provinceName).click();
+    await this.getVendorCreateContactToBusinessProvinceSelectOptions(
+      provinceName,
+    ).click();
   }
 
   async selectCity(cityName: string): Promise<void> {
     await this.getVendorCreateContactToBusinessCity().click();
-    await this.getVendorCreateContactToBusinessCitySelectOptions(cityName).click();
+    await this.getVendorCreateContactToBusinessCitySelectOptions(
+      cityName,
+    ).click();
   }
 
   async selectRegion(regionName: string): Promise<void> {
     await this.getVendorCreateContactToBusinessRegion().click();
-    await this.getVendorCreateContactToBusinessRegionSelectOptions(regionName).click();
+    await this.getVendorCreateContactToBusinessRegionSelectOptions(
+      regionName,
+    ).click();
   }
 
   async selectNeighborhood(neighborhoodName: string): Promise<void> {
     await this.getVendorCreateContactToBusinessNeighborhood().click();
-    await this.getVendorCreateContactToBusinessNeighborhoodSelectOptions(neighborhoodName).click();
+    await this.getVendorCreateContactToBusinessNeighborhoodSelectOptions(
+      neighborhoodName,
+    ).click();
   }
 
   async fillAddress(address: string): Promise<void> {
@@ -271,85 +296,125 @@ export class ContactToBusinessSection {
   //---------------------------WAITS------------------------------------------
 
   async waitForHeaderVisible(): Promise<void> {
-    await this.getVendorCreateContactToBusinessHeader().waitFor({ state: 'visible' });
+    await this.getVendorCreateContactToBusinessHeader().waitFor({
+      state: "visible",
+    });
   }
 
   async waitForAddressInputVisible(): Promise<void> {
-    await this.getVendorCreateContactToBusinessAddressTextBox().waitFor({ state: 'visible' });
+    await this.getVendorCreateContactToBusinessAddressTextBox().waitFor({
+      state: "visible",
+    });
   }
 
   async waitForTellInputVisible(): Promise<void> {
-    await this.getVendorCreateContactToBusinessTellBox().waitFor({ state: 'visible' });
+    await this.getVendorCreateContactToBusinessTellBox().waitFor({
+      state: "visible",
+    });
   }
 
   async waitForMapVisible(): Promise<void> {
-    await this.getVendorCreateContactToBusinessClickToMap().waitFor({ state: 'visible' });
+    await this.getVendorCreateContactToBusinessClickToMap().waitFor({
+      state: "visible",
+    });
   }
 
   //---------------------------ASSERTIONS-------------------------------------
 
   async expectInvalidTellAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessTellIsWrongAllert()).toBeVisible();
+    await expect(
+      this.getVendorCreateContactToBusinessTellIsWrongAllert(),
+    ).toBeVisible();
   }
 
   async expectInvalidTellAlertHidden(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessTellIsWrongAllert()).toBeHidden();
+    await expect(
+      this.getVendorCreateContactToBusinessTellIsWrongAllert(),
+    ).toBeHidden();
   }
 
   async expectInvalidLongitudeAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessLongitudeAllert()).toBeVisible();
+    await expect(
+      this.getVendorCreateContactToBusinessLongitudeAllert(),
+    ).toBeVisible();
   }
 
   async expectInvalidLongitudeAlertHidden(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessLongitudeAllert()).toBeHidden();
+    await expect(
+      this.getVendorCreateContactToBusinessLongitudeAllert(),
+    ).toBeHidden();
   }
 
   async expectInvalidLatitudeAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessLatitudeAllert()).toBeVisible();
+    await expect(
+      this.getVendorCreateContactToBusinessLatitudeAllert(),
+    ).toBeVisible();
   }
 
   async expectInvalidLatitudeAlertHidden(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessLatitudeAllert()).toBeHidden();
+    await expect(
+      this.getVendorCreateContactToBusinessLatitudeAllert(),
+    ).toBeHidden();
   }
 
   async expectRequiredAddressAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessAddressAllert()).toBeVisible();
+    await expect(
+      this.getVendorCreateContactToBusinessAddressAllert(),
+    ).toBeVisible();
   }
 
   async expectRequiredAddressAlertHidden(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessAddressAllert()).toBeHidden();
+    await expect(
+      this.getVendorCreateContactToBusinessAddressAllert(),
+    ).toBeHidden();
   }
 
   async expectEmptyTellAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessEmptyTellAllert()).toBeVisible();
+    await expect(
+      this.getVendorCreateContactToBusinessEmptyTellAllert(),
+    ).toBeVisible();
   }
 
   async expectEmptyTellAlertHidden(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessEmptyTellAllert()).toBeHidden();
+    await expect(
+      this.getVendorCreateContactToBusinessEmptyTellAllert(),
+    ).toBeHidden();
   }
 
   async expectPersianKeyboardAlertVisible(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessPersianKeyBoardAllert()).toBeVisible();
+    await expect(
+      this.getVendorCreateContactToBusinessPersianKeyBoardAllert(),
+    ).toBeVisible();
   }
 
   async expectPersianKeyboardAlertHidden(): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessPersianKeyBoardAllert()).toBeHidden();
+    await expect(
+      this.getVendorCreateContactToBusinessPersianKeyBoardAllert(),
+    ).toBeHidden();
   }
 
   async expectAddressValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessAddressTextBox()).toHaveValue(value);
+    await expect(
+      this.getVendorCreateContactToBusinessAddressTextBox(),
+    ).toHaveValue(value);
   }
 
   async expectLongitudeValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessLongitude()).toHaveValue(value);
+    await expect(this.getVendorCreateContactToBusinessLongitude()).toHaveValue(
+      value,
+    );
   }
 
   async expectLatitudeValue(value: string): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessLatitude()).toHaveValue(value);
+    await expect(this.getVendorCreateContactToBusinessLatitude()).toHaveValue(
+      value,
+    );
   }
 
   async expectAddedTellsCount(count: number): Promise<void> {
-    await expect(this.getVendorCreateContactToBusinessDeleteTell()).toHaveCount(count);
+    await expect(this.getVendorCreateContactToBusinessDeleteTell()).toHaveCount(
+      count,
+    );
   }
 
   //---------------------------FLOWS (SCENARIOS)------------------------------
@@ -359,6 +424,8 @@ export class ContactToBusinessSection {
    */
   async openSectionAndWaitReadyFlow(): Promise<void> {
     await this.openContactToBusinessSection();
+    await this.openContactToBusinessSection();
+
     await this.waitForAddressInputVisible();
   }
 
@@ -366,12 +433,16 @@ export class ContactToBusinessSection {
    * سناریو: پر کردن بخش موقعیت جغرافیایی و آدرس (سازگار با تست‌های مثبت و منفی)
    */
   async fillLocationFlow(params: FillLocationParams): Promise<void> {
-    if (params.longitude !== undefined) await this.fillLongitude(params.longitude);
+    if (params.longitude !== undefined)
+      await this.fillLongitude(params.longitude);
     if (params.latitude !== undefined) await this.fillLatitude(params.latitude);
-    if (params.provinceName !== undefined) await this.selectProvince(params.provinceName);
+    if (params.provinceName !== undefined)
+      await this.selectProvince(params.provinceName);
     if (params.cityName !== undefined) await this.selectCity(params.cityName);
-    if (params.regionName !== undefined) await this.selectRegion(params.regionName);
-    if (params.neighborhoodName !== undefined) await this.selectNeighborhood(params.neighborhoodName);
+    if (params.regionName !== undefined)
+      await this.selectRegion(params.regionName);
+    if (params.neighborhoodName !== undefined)
+      await this.selectNeighborhood(params.neighborhoodName);
     if (params.address !== undefined) await this.fillAddress(params.address);
   }
 
@@ -387,7 +458,9 @@ export class ContactToBusinessSection {
   /**
    * سناریو: پر کردن کامل تمام اطلاعات تماس و آدرس
    */
-  async fillCompleteContactInfoFlow(params: FillContactInfoParams): Promise<void> {
+  async fillCompleteContactInfoFlow(
+    params: FillContactInfoParams,
+  ): Promise<void> {
     await this.fillLocationFlow(params);
 
     if (params.tells && params.tells.length > 0) {

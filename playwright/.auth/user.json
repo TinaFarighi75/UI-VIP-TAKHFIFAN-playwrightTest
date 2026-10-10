@@ -2,20 +2,20 @@
   "cookies": [
     {
       "name": "_ga",
-      "value": "GA1.2.503665713.1791289539",
+      "value": "GA1.2.1470349207.1791652373",
       "domain": ".takhfifan.com",
       "path": "/",
-      "expires": 1825849538.798073,
+      "expires": 1826212373.488715,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "_gid",
-      "value": "GA1.2.2104206903.1791289539",
+      "value": "GA1.2.1626172992.1791652373",
       "domain": ".takhfifan.com",
       "path": "/",
-      "expires": 1791375938,
+      "expires": 1791738773,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -25,7 +25,7 @@
       "value": "1",
       "domain": ".takhfifan.com",
       "path": "/",
-      "expires": 1791289598,
+      "expires": 1791652433,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
@@ -37,7 +37,7 @@
       "localStorage": [
         {
           "name": "user",
-          "value": "{\"user\":{\"id\":311464,\"email\":\"tinafarighi75@gmail.com\",\"mobile\":null,\"authentication_token\":\"uzYRTcxmw56FeG5C24xA\",\"role_name\":\"admin\",\"access_new_panel\":false,\"login_url\":\"https://stgiran-vip.takhfifan.com/panel/redirect/?token=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKbGVIQWlPakUzT1RFeU9EazRNemdzSW5WelpYSmZhV1FpT2pNeE1UUTJOQ3dpWlcxaGFXd2lPaUowYVc1aFptRnlhV2RvYVRjMVFHZHRZV2xzTG1OdmJTSjkuTTEtQUJZaS13TzNma2V5aUY3cWZ2SlNHUUthRENkdHlyOEhUcDBLV01Pcw==\",\"sign_in_count\":49652,\"renderer_token\":\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNDdjMGRiNi1iNTAzLTQ4ZmQtODRhYy0yNzAyZDRkYjU0YmQiLCJzdWIiOiIxMCIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTc5MTI4OTUzOCwiZXhwIjoxNzkxMjkzMTM4fQ.5cwWqp3-KLyPGhq_6aYqLs26zQ_spb5qWoZVPmjULCM\"}}"
+          "value": "{\"user\":{\"id\":311464,\"email\":\"tinafarighi75@gmail.com\",\"mobile\":null,\"authentication_token\":\"uzYRTcxmw56FeG5C24xA\",\"role_name\":\"admin\",\"access_new_panel\":false,\"login_url\":\"https://stgiran-vip.takhfifan.com/panel/redirect/?token=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKbGVIQWlPakUzT1RFMk5USTJOamtzSW5WelpYSmZhV1FpT2pNeE1UUTJOQ3dpWlcxaGFXd2lPaUowYVc1aFptRnlhV2RvYVRjMVFHZHRZV2xzTG1OdmJTSjkud0UtSHdhZnZjaC1rM09IaWdwSnBGNWE1MDYySFIzOGhoYWRlQ08tRVVKUQ==\",\"sign_in_count\":50203,\"renderer_token\":\"Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJlNDdjMGRiNi1iNTAzLTQ4ZmQtODRhYy0yNzAyZDRkYjU0YmQiLCJzdWIiOiIxMCIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTc5MTY1MjM2OSwiZXhwIjoxNzkxNjU1OTY5fQ.5AcLjSAEJ5kFwI5VALRJHNfT0wso5pl3Jm0lQl27ayw\"}}"
         },
         {
           "name": "persist:root",

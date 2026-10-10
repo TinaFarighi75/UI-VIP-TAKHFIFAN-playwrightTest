@@ -1,7 +1,8 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+//utils/vendor/publicBusinessInfo/publicBusinessInfo.ts
+import { expect, type Locator, type Page } from "@playwright/test";
 
-import { createPublicBusinessInfoElements } from './publicBusinessInfo-elements';
-import type { PuplicBusinessInfoElements } from './publicBusinessInfo-types';
+import { createPublicBusinessInfoElements } from "./publicBusinessInfo-elements";
+import type { PuplicBusinessInfoElements } from "./publicBusinessInfo-types";
 
 export class PublicBusinessInfoSection {
   private readonly publicBusinessInfo: PuplicBusinessInfoElements;
@@ -31,7 +32,9 @@ export class PublicBusinessInfoSection {
   }
 
   getPublicBusinessInfoSelectOptionOfCategory(categoryName: string): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoSelectOptionOfCategory(categoryName);
+    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoSelectOptionOfCategory(
+      categoryName,
+    );
   }
 
   getPublicBusinessInfoMenueAddress(): Locator {
@@ -43,15 +46,21 @@ export class PublicBusinessInfoSection {
   }
 
   getPublicBusinessInfoPOSsystemSelectOption(): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoPOSsystemSelectOption;
+    return this.publicBusinessInfo
+      .vendorCreatePublicBusinessInfoPOSsystemSelectOption;
   }
 
   getPublicBusinessInfoPOSsystemDropDown(): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoPOSsystemDropDown;
+    return this.publicBusinessInfo
+      .vendorCreatePublicBusinessInfoPOSsystemDropDown;
   }
 
-  getPublicBusinessInfoPOSsystemDropDownSelectOption(): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoPOSsystemDropDownSeelectOption;
+  getPublicBusinessInfoPOSsystemDropDownSelectOption(
+    posName: string = "باران",
+  ): Locator {
+    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoPOSsystemDropDownSelectOption(
+      posName,
+    );
   }
 
   getPublicBusinessInfoDescription(): Locator {
@@ -59,7 +68,8 @@ export class PublicBusinessInfoSection {
   }
 
   getPublicBusinessInfoDescriptionInputBox(): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoDescriptionInputBox;
+    return this.publicBusinessInfo
+      .vendorCreatePublicBusinessInfoDescriptionInputBox;
   }
 
   getPublicBusinessInfoLogo(): Locator {
@@ -79,25 +89,36 @@ export class PublicBusinessInfoSection {
   }
 
   getPublicBusinessInfoNameEmptyAlert(): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoNameEmptyAllert;
+    return this.publicBusinessInfo
+      .vendorCreatePublicBusinessInfoNameEmptyAllert;
   }
 
   getPublicBusinessInfoCategoryEmptyAlert(): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoCategoryEmptyAllert;
+    return this.publicBusinessInfo
+      .vendorCreatePublicBusinessInfoCategoryEmptyAllert;
   }
 
   getPublicBusinessInfoPOSsystemDropDownEmptyAlert(): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoPOSsystemDropDownEmptyAllert;
+    return this.publicBusinessInfo
+      .vendorCreatePublicBusinessInfoPOSsystemDropDownEmptyAllert;
   }
 
   getPublicBusinessInfoNameExist(businessName: string): Locator {
-    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoNameExist(businessName);
+    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoNameExist(
+      businessName,
+    );
   }
 
   //---------------------------METHODS (ACTIONS)---------------------------------------
 
   async openPublicBusinessInfoSection(): Promise<void> {
-    await this.getPublicBusinessInfoOpenSection().click();
+    // اگر فیلد نام از قبل باز و مشخص است، یعنی سکشن باز است و نیازی به کلیک ندارد
+    const isAlreadyOpen = await this.getPublicBusinessInfoName()
+      .isVisible()
+      .catch(() => false);
+    if (!isAlreadyOpen) {
+      await this.getPublicBusinessInfoOpenSection().click();
+    }
   }
 
   async fillBusinessName(businessName: string): Promise<void> {
@@ -108,9 +129,16 @@ export class PublicBusinessInfoSection {
     await this.getPublicBusinessInfoName().clear();
   }
 
-  async selectCategory(categoryName: string): Promise<void> {
+  async selectCategory(categoryName?: string): Promise<void> {
+    // اگر خالی بود یا ارسال نشد، هیچ کاری نکن تا دسته‌بندی انتخاب نشود
+    if (!categoryName || categoryName.trim() === "") {
+      return;
+    }
+
     await this.getPublicBusinessInfoSelectCategory().click();
-    await this.getPublicBusinessInfoSelectOptionOfCategory(categoryName).click();
+    await this.getPublicBusinessInfoSelectOptionOfCategory(
+      categoryName,
+    ).click();
   }
 
   async fillMenuAddress(menuAddress: string): Promise<void> {
@@ -125,9 +153,11 @@ export class PublicBusinessInfoSection {
     await this.getPublicBusinessInfoPOSsystem().selectOption(option);
   }
 
-  async selectPOSsystemDropDownOption(): Promise<void> {
+  async selectPOSsystemDropDownOption(posName: string): Promise<void> {
     await this.getPublicBusinessInfoPOSsystemDropDown().click();
-    await this.getPublicBusinessInfoPOSsystemDropDownSelectOption().click();
+    await this.getPublicBusinessInfoPOSsystemDropDownSelectOption(
+      posName,
+    ).click();
   }
 
   async fillDescription(description: string): Promise<void> {
@@ -143,14 +173,16 @@ export class PublicBusinessInfoSection {
   }
 
   async uploadLogo(filePath: string): Promise<void> {
-    const fileChooserPromise = this.page.waitForEvent('filechooser');
+    const fileChooserPromise = this.page.waitForEvent("filechooser");
     await this.getPublicBusinessInfoLogoButton().click();
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(filePath);
   }
 
+  // utils/vendor/publicBusinessInfo/publicBusinessInfo.ts
+
   async uploadCover(filePath: string): Promise<void> {
-    const fileChooserPromise = this.page.waitForEvent('filechooser');
+    const fileChooserPromise = this.page.waitForEvent("filechooser");
     await this.getPublicBusinessInfoCoverButton().click();
     const fileChooser = await fileChooserPromise;
     await fileChooser.setFiles(filePath);
@@ -159,19 +191,23 @@ export class PublicBusinessInfoSection {
   //---------------------------WAITS---------------------------------------------------
 
   async waitForHeaderVisible(): Promise<void> {
-    await this.getPublicBusinessInfoHeader().waitFor({ state: 'visible' });
+    await this.getPublicBusinessInfoHeader().waitFor({ state: "visible" });
   }
 
   async waitForNameInputVisible(): Promise<void> {
-    await this.getPublicBusinessInfoName().waitFor({ state: 'visible' });
+    await this.getPublicBusinessInfoName().waitFor({ state: "visible" });
   }
 
   async waitForCategoryDropdownVisible(): Promise<void> {
-    await this.getPublicBusinessInfoSelectCategory().waitFor({ state: 'visible' });
+    await this.getPublicBusinessInfoSelectCategory().waitFor({
+      state: "visible",
+    });
   }
 
   async waitForDescriptionInputVisible(): Promise<void> {
-    await this.getPublicBusinessInfoDescriptionInputBox().waitFor({ state: 'visible' });
+    await this.getPublicBusinessInfoDescriptionInputBox().waitFor({
+      state: "visible",
+    });
   }
 
   //---------------------------ASSERTIONS---------------------------------------------
@@ -185,11 +221,15 @@ export class PublicBusinessInfoSection {
   }
 
   async expectMenuAddressValue(expectedAddress: string): Promise<void> {
-    await expect(this.getPublicBusinessInfoMenueAddress()).toHaveValue(expectedAddress);
+    await expect(this.getPublicBusinessInfoMenueAddress()).toHaveValue(
+      expectedAddress,
+    );
   }
 
   async expectDescriptionValue(expectedDescription: string): Promise<void> {
-    await expect(this.getPublicBusinessInfoDescriptionInputBox()).toHaveText(expectedDescription);
+    await expect(this.getPublicBusinessInfoDescriptionInputBox()).toHaveText(
+      expectedDescription,
+    );
   }
 
   async expectNameEmptyAlertVisible(): Promise<void> {
@@ -201,13 +241,23 @@ export class PublicBusinessInfoSection {
   }
 
   async expectPOSDropDownEmptyAlertVisible(): Promise<void> {
-    await expect(this.getPublicBusinessInfoPOSsystemDropDownEmptyAlert()).toBeVisible();
+    await expect(
+      this.getPublicBusinessInfoPOSsystemDropDownEmptyAlert(),
+    ).toBeVisible();
   }
 
   async expectExistingBusinessLinkVisible(businessName: string): Promise<void> {
-    await expect(this.getPublicBusinessInfoNameExist(businessName)).toBeVisible();
+    await expect(
+      this.getPublicBusinessInfoNameExist(businessName),
+    ).toBeVisible();
   }
-
+  async assertAllRequiredAlertsHiddenFlow(): Promise<void> {
+    await expect(this.getPublicBusinessInfoNameEmptyAlert()).toBeHidden();
+    await expect(this.getPublicBusinessInfoCategoryEmptyAlert()).toBeHidden();
+    await expect(
+      this.getPublicBusinessInfoPOSsystemDropDownEmptyAlert(),
+    ).toBeHidden();
+  }
   //---------------------------FLOWS (SCENARIOS)--------------------------------------
 
   /**
@@ -215,6 +265,8 @@ export class PublicBusinessInfoSection {
    */
   async openSectionAndWaitReadyFlow(): Promise<void> {
     await this.openPublicBusinessInfoSection();
+    await this.openPublicBusinessInfoSection();
+
     await this.waitForHeaderVisible();
     await this.waitForNameInputVisible();
   }
@@ -272,7 +324,10 @@ export class PublicBusinessInfoSection {
   /**
    * سناریو: آپلود فایل‌های لوگو و کاور (تکی یا همزمان)
    */
-  async uploadMediaFilesFlow(params: { logoPath?: string; coverPath?: string }): Promise<void> {
+  async uploadMediaFilesFlow(params: {
+    logoPath?: string;
+    coverPath?: string;
+  }): Promise<void> {
     if (params.logoPath !== undefined) {
       await this.uploadLogo(params.logoPath);
     }

@@ -10,7 +10,8 @@ export type PuplicBusinessInfoElements = {
   vendorCreatePublicBusinessInfoPOSsystem:Locator;
   vendorCreatePublicBusinessInfoPOSsystemSelectOption:Locator;
   vendorCreatePublicBusinessInfoPOSsystemDropDown:Locator;
-  vendorCreatePublicBusinessInfoPOSsystemDropDownSeelectOption:Locator;
+  vendorCreatePublicBusinessInfoPOSsystemDropDownSelectOption: (posName?: string) => Locator;
+
   vendorCreatePublicBusinessInfoDescription:Locator;
   vendorCreatePublicBusinessInfoDescriptionInputBox:Locator;
   vendorCreatePublicBusinessInfoLogo:Locator;
@@ -21,6 +22,5 @@ export type PuplicBusinessInfoElements = {
   vendorCreatePublicBusinessInfoCategoryEmptyAllert:Locator;
   vendorCreatePublicBusinessInfoPOSsystemDropDownEmptyAllert:Locator;
   vendorCreatePublicBusinessInfoNameExist:(businessName: string) => Locator;
-
 
 };

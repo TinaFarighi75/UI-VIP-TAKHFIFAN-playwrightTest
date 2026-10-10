@@ -1,3 +1,5 @@
+//fixtures
+
 import { test as base } from "@playwright/test";
 import { LoginService } from "./login/loginAdminPannel";
 import { Auth } from "./auth/auth";

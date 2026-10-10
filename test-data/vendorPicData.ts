@@ -9,7 +9,7 @@ export const vendorMediaData = {
     invalidFormatLogoPath: path.join(ASSETS_PATH, "sample.txt"),
   },
   cover: {
-    validCoverPath: path.join(ASSETS_PATH, "cover.jpg"),
+    validCoverPath: path.join(ASSETS_PATH, "cover.png"),
     invalidFormatCoverPath: path.join(ASSETS_PATH, "sample.txt"),
   },
 };
