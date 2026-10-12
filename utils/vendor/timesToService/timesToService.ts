@@ -146,8 +146,19 @@ export class TimesToServiceSection {
     firstValue: string,
     secondValue: string,
   ): Promise<void> {
-    await this.getTimePickerFirstBoxInput().fill(firstValue);
-    await this.getTimePickerSecondBoxInput().fill(secondValue);
+    const formattedFirst = firstValue.trim().padStart(2, "0");
+    const formattedSecond = secondValue.trim().padStart(2, "0");
+
+    const firstBox = this.getTimePickerFirstBoxInput();
+    const secondBox = this.getTimePickerSecondBoxInput();
+
+    // پاک کردن و پر کردن باکس اول (ساعت)
+    await firstBox.click();
+    await firstBox.fill(formattedFirst);
+
+    // پاک کردن و پر کردن باکس دوم (دقیقه)
+    await secondBox.click();
+    await secondBox.fill(formattedSecond);
   }
 
   async clickFirstBoxArrowUp(): Promise<void> {

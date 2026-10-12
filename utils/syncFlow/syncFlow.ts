@@ -1,4 +1,4 @@
-//utils/syncFlow/syncFlow.ts
+// utils/syncFlow/syncFlow.ts
 
 import { APIRequestContext } from "@playwright/test";
 import { BaseApi } from "../Base/base";
@@ -27,40 +27,63 @@ export class SyncFlow extends BaseApi {
     this.sync = new Sync(request);
   }
 
+  // متد کمکی برای یکسان‌سازی حروف فارسی و فاصله‌ها
+  private normalizeString(str: string): string {
+    return str
+      .replace(/ي/g, "ی")
+      .replace(/ك/g, "ک")
+      .replace(/\u200C/g, " ") // نیم‌فاصله به فاصله
+      .trim();
+  }
+
   //------------------FULL SYNC FLOW---------------------------
 
-  /**
-   * ترتیب مراحل:
-   * 1. searchVendor
-   * 2. selectExpert
-   * 3. expertReview
-   * 4. completed
-   * 5. supervisorsApproval
-   * 6. sync
-   */
   async executeFullSyncFlow(
     token: string,
     vendor_name: string,
     sales_agent_id: number | string,
     business_id?: number | string,
   ) {
-    // 1. Search Vendor
-    const searchRes = await this.businessSearch.businessSearchRequest(
-      token,
-      vendor_name,
-    );
-
-    // تعیین قطعی targetBusinessId
     let targetBusinessId: number | string;
 
     if (business_id) {
       targetBusinessId = business_id;
     } else {
-      const searchData = await this.businessSearch.getBusinessSearchResponse();
-      if (!searchData.data || searchData.data.length === 0) {
-        throw new Error(`Vendor with name "${vendor_name}" not found.`);
+      // 1. سرچ با Retry (حداکثر ۵ بار با فاصله ۲ ثانیه برای آماده شدن دیتابیس)
+      let matchedVendor: any = null;
+      const normalizedTargetName = this.normalizeString(vendor_name);
+
+      for (let attempt = 1; attempt <= 5; attempt++) {
+        await this.businessSearch.businessSearchRequest(token, vendor_name);
+        const searchData =
+          await this.businessSearch.getBusinessSearchResponse();
+
+        matchedVendor = searchData.data?.find((item: any) => {
+          const itemName = item.attributes?.name || "";
+          return this.normalizeString(itemName) === normalizedTargetName;
+        });
+
+        if (matchedVendor) {
+          break;
+        }
+
+        // اگر پیدا نشد، ۲ ثانیه صبر می‌کنیم و مجدد سرچ می‌زنیم
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       }
-      targetBusinessId = searchData.data[0].id;
+
+      if (!matchedVendor) {
+        // برای دیباگ دقیق، نام‌های دریافتی از سرچ را هم چاپ می‌کنیم
+        const searchData =
+          await this.businessSearch.getBusinessSearchResponse();
+        const foundNames = searchData.data?.map((i: any) => i.attributes?.name);
+        console.log("❌ Available names in search result:", foundNames);
+
+        throw new Error(
+          `Vendor with exact name "${vendor_name}" not found in search results after 5 attempts.`,
+        );
+      }
+
+      targetBusinessId = matchedVendor.id;
     }
 
     // 2. Select Expert (Assign to Sales Agent)
@@ -99,9 +122,40 @@ export class SyncFlow extends BaseApi {
       "sync",
     );
 
+    // -------------------------------------------------------------
+    // 7. بررسی مجدد پس از سینک، چاپ آیدی‌ها و اعتبارسنجی
+    // -------------------------------------------------------------
+    // ۲ ثانیه صبر برای اعمال تغییرات در سرویس V3
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+
+    await this.businessSearch.businessSearchRequest(token, vendor_name);
+    const postSyncData = await this.businessSearch.getBusinessSearchResponse();
+
+    const syncedVendor = postSyncData.data?.find(
+      (item: any) => String(item.id) === String(targetBusinessId),
+    );
+
+    const businessId = syncedVendor?.id;
+    const v3Id = syncedVendor?.attributes?.v3_id;
+
+    console.log(`📌 Business ID: ${businessId}`);
+    console.log(`📌 V3 ID: ${v3Id}`);
+
+    if (!businessId) {
+      throw new Error(
+        `[Sync Verification Failed]: Business ID is missing or empty!`,
+      );
+    }
+
+    if (v3Id === null || v3Id === undefined) {
+      throw new Error(
+        `[Sync Verification Failed]: v3_id is null or missing for business ID: ${businessId}`,
+      );
+    }
+
     return {
-      businessId: targetBusinessId,
-      searchRes,
+      businessId,
+      v3Id,
       selectExpertRes,
       expertReviewRes,
       completedRes,

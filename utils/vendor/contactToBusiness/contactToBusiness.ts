@@ -1,4 +1,4 @@
-//utils/vendor/contactToBusiness/contactToBusiness.ts
+// utils/vendor/contactToBusiness/contactToBusiness.ts
 import { expect, type Locator, type Page } from "@playwright/test";
 
 import { contactToBusinessElements } from "./contactToBusiness-elements";
@@ -25,6 +25,24 @@ export class ContactToBusinessSection {
   constructor(page: Page) {
     this.page = page;
     this.contactToBusiness = contactToBusinessElements(page);
+  }
+
+  /**
+   * متد کمکی استاندارد پروژه برای اینپوت‌های React Hook Form جهت آپدیت استیت قطعی
+   */
+  private async fillReactHookFormInput(
+    locator: Locator,
+    value: string,
+  ): Promise<void> {
+    await locator.waitFor({ state: "visible", timeout: 10000 });
+    await locator.scrollIntoViewIfNeeded();
+    await locator.click({ force: true });
+    await locator.press("ControlOrMeta+a");
+    await locator.press("Backspace");
+    await locator.pressSequentially(value, { delay: 30 });
+    await locator.dispatchEvent("input");
+    await locator.dispatchEvent("change");
+    await locator.blur();
   }
 
   //---------------------------ELEMENTS---------------------------------------
@@ -148,7 +166,13 @@ export class ContactToBusinessSection {
   //---------------------------ACTIONS----------------------------------------
 
   async openContactToBusinessSection(): Promise<void> {
-    await this.getVendorCreateContactToBusinessHeader().click();
+    const isExpanded =
+      await this.getVendorCreateContactToBusinessHeader().getAttribute(
+        "aria-expanded",
+      );
+    if (isExpanded !== "true") {
+      await this.getVendorCreateContactToBusinessHeader().click();
+    }
   }
 
   async clickMapButton(): Promise<void> {
@@ -160,63 +184,202 @@ export class ContactToBusinessSection {
   }
 
   async fillLongitude(longitude: string): Promise<void> {
-    await this.getVendorCreateContactToBusinessLongitude().fill(longitude);
+    await this.fillReactHookFormInput(
+      this.getVendorCreateContactToBusinessLongitude(),
+      longitude,
+    );
   }
 
   async clearLongitude(): Promise<void> {
-    await this.getVendorCreateContactToBusinessLongitude().clear();
+    const input = this.getVendorCreateContactToBusinessLongitude();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
   }
 
   async fillLatitude(latitude: string): Promise<void> {
-    await this.getVendorCreateContactToBusinessLatitude().fill(latitude);
+    await this.fillReactHookFormInput(
+      this.getVendorCreateContactToBusinessLatitude(),
+      latitude,
+    );
   }
 
   async clearLatitude(): Promise<void> {
-    await this.getVendorCreateContactToBusinessLatitude().clear();
+    const input = this.getVendorCreateContactToBusinessLatitude();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
   }
 
   async selectProvince(provinceName: string): Promise<void> {
-    await this.getVendorCreateContactToBusinessProvince().click();
-    await this.getVendorCreateContactToBusinessProvinceSelectOptions(
-      provinceName,
-    ).click();
+    const provinceControl = this.getVendorCreateContactToBusinessProvince();
+    await provinceControl.scrollIntoViewIfNeeded();
+
+    const input = provinceControl
+      .locator("input")
+      .or(this.page.locator("#react-select-4-input"))
+      .first();
+
+    if (await input.isVisible().catch(() => false)) {
+      await input.fill(provinceName);
+    } else {
+      await provinceControl.click();
+    }
+
+    const option =
+      this.getVendorCreateContactToBusinessProvinceSelectOptions(provinceName);
+    await option.waitFor({ state: "visible", timeout: 10000 });
+    await option.click();
   }
 
   async selectCity(cityName: string): Promise<void> {
-    await this.getVendorCreateContactToBusinessCity().click();
-    await this.getVendorCreateContactToBusinessCitySelectOptions(
-      cityName,
-    ).click();
+    const targetCity = Array.isArray(cityName) ? cityName[0] : cityName;
+    if (!targetCity) return;
+
+    const cityControl = this.getVendorCreateContactToBusinessCity();
+    await cityControl.scrollIntoViewIfNeeded();
+
+    const input = cityControl
+      .locator("input")
+      .or(this.page.locator("#react-select-5-input"))
+      .first();
+
+    if (await input.isVisible().catch(() => false)) {
+      await input.click({ force: true });
+      await input.fill(targetCity);
+      const option =
+        this.getVendorCreateContactToBusinessCitySelectOptions(targetCity);
+      await option
+        .first()
+        .waitFor({ state: "visible", timeout: 7000 })
+        .catch(() => {});
+      await input.press("Enter");
+    } else {
+      await cityControl.click({ force: true });
+      const option =
+        this.getVendorCreateContactToBusinessCitySelectOptions(targetCity);
+      await option.first().waitFor({ state: "visible", timeout: 7000 });
+      await option
+        .first()
+        .click({ force: true })
+        .catch(() => {});
+    }
   }
 
-  async selectRegion(regionName: string): Promise<void> {
-    await this.getVendorCreateContactToBusinessRegion().click();
-    await this.getVendorCreateContactToBusinessRegionSelectOptions(
-      regionName,
-    ).click();
+  async selectRegion(regionName: string | string[]): Promise<void> {
+    const targetRegion = Array.isArray(regionName) ? regionName[0] : regionName;
+    if (!targetRegion) return;
+
+    const regionField = this.getVendorCreateContactToBusinessRegion();
+    await regionField.scrollIntoViewIfNeeded();
+
+    const input = regionField
+      .locator("input")
+      .or(this.page.locator("#react-select-6-input"))
+      .first();
+
+    if (await input.isVisible().catch(() => false)) {
+      await input.click({ force: true });
+      await input.fill(targetRegion);
+      const option =
+        this.getVendorCreateContactToBusinessRegionSelectOptions(targetRegion);
+      await option
+        .first()
+        .waitFor({ state: "visible", timeout: 7000 })
+        .catch(() => {});
+      await input.press("Enter");
+    } else {
+      await regionField.click({ force: true });
+      const option =
+        this.getVendorCreateContactToBusinessRegionSelectOptions(targetRegion);
+      await option.first().waitFor({ state: "visible", timeout: 7000 });
+      await option
+        .first()
+        .scrollIntoViewIfNeeded()
+        .catch(() => {});
+      await option.first().click({ force: true });
+    }
   }
 
   async selectNeighborhood(neighborhoodName: string): Promise<void> {
-    await this.getVendorCreateContactToBusinessNeighborhood().click();
-    await this.getVendorCreateContactToBusinessNeighborhoodSelectOptions(
-      neighborhoodName,
-    ).click();
+    const neighborhoodField =
+      this.getVendorCreateContactToBusinessNeighborhood();
+    await neighborhoodField.scrollIntoViewIfNeeded();
+
+    const input = neighborhoodField
+      .locator("input")
+      .or(this.page.locator("#react-select-7-input"))
+      .first();
+
+    if (await input.isVisible().catch(() => false)) {
+      await input.click({ force: true });
+      await input.fill(neighborhoodName);
+      const option =
+        this.getVendorCreateContactToBusinessNeighborhoodSelectOptions(
+          neighborhoodName,
+        );
+      await option
+        .first()
+        .waitFor({ state: "visible", timeout: 7000 })
+        .catch(() => {});
+      await input.press("Enter");
+    } else {
+      await neighborhoodField.click({ force: true });
+    }
+
+    const option =
+      this.getVendorCreateContactToBusinessNeighborhoodSelectOptions(
+        neighborhoodName,
+      );
+    if (
+      (await option.count()) > 0 &&
+      !(await neighborhoodField.innerText()).includes(neighborhoodName)
+    ) {
+      await option
+        .first()
+        .scrollIntoViewIfNeeded()
+        .catch(() => {});
+      await option
+        .first()
+        .click({ force: true })
+        .catch(() => {});
+    }
   }
 
   async fillAddress(address: string): Promise<void> {
-    await this.getVendorCreateContactToBusinessAddressTextBox().fill(address);
+    await this.fillReactHookFormInput(
+      this.getVendorCreateContactToBusinessAddressTextBox(),
+      address,
+    );
   }
 
   async clearAddress(): Promise<void> {
-    await this.getVendorCreateContactToBusinessAddressTextBox().clear();
+    const input = this.getVendorCreateContactToBusinessAddressTextBox();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
   }
 
   async fillTell(tell: string): Promise<void> {
-    await this.getVendorCreateContactToBusinessTellBox().fill(tell);
+    await this.fillReactHookFormInput(
+      this.getVendorCreateContactToBusinessTellBox(),
+      tell,
+    );
   }
 
   async clearTell(): Promise<void> {
-    await this.getVendorCreateContactToBusinessTellBox().clear();
+    const input = this.getVendorCreateContactToBusinessTellBox();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
   }
 
   async addTell(): Promise<void> {
@@ -424,8 +587,6 @@ export class ContactToBusinessSection {
    */
   async openSectionAndWaitReadyFlow(): Promise<void> {
     await this.openContactToBusinessSection();
-    await this.openContactToBusinessSection();
-
     await this.waitForAddressInputVisible();
   }
 

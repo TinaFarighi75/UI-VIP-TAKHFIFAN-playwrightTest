@@ -1,4 +1,4 @@
-//utils/vendor/financialInformation/financialInformation.ts
+// utils/vendor/financialInformation/financialInformation.ts
 
 import { expect, type Locator, type Page } from "@playwright/test";
 
@@ -141,13 +141,17 @@ export class VendorCreateFinancialInformationSection {
    * این سکشن با کلیک روی هدر باز/بسته می‌شود
    */
   async clickFinancialInformationHeader(): Promise<void> {
-    await this.getVendorCreateFinancialInformationHeader().click();
+    await this.getVendorCreateFinancialInformationHeader().click({
+      force: true,
+    });
   }
 
   //---------------------------FIELD ACTIONS----------------------------------------
 
   async clickBusinessTypeTitle(): Promise<void> {
-    await this.getVendorCreateFinancialInformationBusinessTypeTitle().click();
+    await this.getVendorCreateFinancialInformationBusinessTypeTitle().click({
+      force: true,
+    });
   }
 
   async selectBusinessType(value: BusinessTypeValue): Promise<void> {
@@ -157,39 +161,120 @@ export class VendorCreateFinancialInformationSection {
   }
 
   async fillNationalId(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationNationalIdInput().fill(value);
+    const input = this.getVendorCreateFinancialInformationNationalIdInput();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    if (value) {
+      await input.pressSequentially(value, { delay: 30 });
+    }
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
+    await input.blur();
   }
 
   async fillFidaCode(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationFidaCodeInput().fill(value);
+    const input = this.getVendorCreateFinancialInformationFidaCodeInput();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    if (value) {
+      await input.pressSequentially(value, { delay: 30 });
+    }
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
+    await input.blur();
   }
 
   async fillGivenName(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationGivenNameInput().fill(value);
+    const input = this.getVendorCreateFinancialInformationGivenNameInput();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    if (value) {
+      await input.pressSequentially(value, { delay: 30 });
+    }
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
+    await input.blur();
   }
 
   async fillSurname(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationSurnameInput().fill(value);
+    const input = this.getVendorCreateFinancialInformationSurnameInput();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    if (value) {
+      await input.pressSequentially(value, { delay: 30 });
+    }
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
+    await input.blur();
   }
 
   async fillBankAccount(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationBankAccountInput().fill(
-      value,
-    );
+    const input = this.getVendorCreateFinancialInformationBankAccountInput();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    if (value) {
+      await input.pressSequentially(value, { delay: 30 });
+    }
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
+    await input.blur();
   }
 
   async fillSheba(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationShebaInput().fill(value);
+    const input = this.getVendorCreateFinancialInformationShebaInput();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    if (value) {
+      await input.pressSequentially(value, { delay: 30 });
+    }
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
+    await input.blur();
   }
 
   async fillEconomicCode(value: string): Promise<void> {
-    await this.getVendorCreateFinancialInformationEconomicCodeInput().fill(
-      value,
-    );
+    const input = this.getVendorCreateFinancialInformationEconomicCodeInput();
+    await input.click({ force: true });
+    await input.press("ControlOrMeta+a");
+    await input.press("Backspace");
+    if (value) {
+      await input.pressSequentially(value, { delay: 30 });
+    }
+    await input.dispatchEvent("input");
+    await input.dispatchEvent("change");
+    await input.blur();
   }
 
   async clickShebaInquiry(): Promise<void> {
-    await this.getVendorCreateFinancialInformationShebaInquiryButton().click();
+    await this.getVendorCreateFinancialInformationShebaInquiryButton().click({
+      force: true,
+    });
+  }
+
+  /**
+   * تریگر کردن اعتبارسنجی الزامی بودن فیلدها برای فرم‌های React Hook Form
+   */
+  async triggerRequiredValidation(locator: Locator): Promise<void> {
+    await locator.click({ force: true });
+    // تایپ یک کاراکتر و بعد پاک کردن تا رویدادهای input و change تریگر شوند
+    await locator.pressSequentially("1", { delay: 30 });
+    await locator.press("ControlOrMeta+a");
+    await locator.press("Backspace");
+    // ارسال صریح event ها برای اطمینان از React Hook Form
+    await locator.dispatchEvent("input");
+    await locator.dispatchEvent("change");
+    await locator.blur();
+  }
+  async triggerNationalIdRequiredValidation(): Promise<void> {
+    await this.triggerRequiredValidation(
+      this.getVendorCreateFinancialInformationNationalIdInput(),
+    );
   }
 
   //---------------------------WAITS (STABILITY)-------------------------------------
@@ -306,7 +391,7 @@ export class VendorCreateFinancialInformationSection {
     ).toBeVisible();
   }
 
-  async expectNationalIdInvalidAlertForLegalVisible(): Promise<void> {
+  async expectNationalIdLegalInvalidAlertForLegalVisible(): Promise<void> {
     await expect(
       this.getVendorCreateFinancialInformationNationalIdLegalInvalidAlert(),
     ).toBeVisible();
@@ -451,5 +536,17 @@ export class VendorCreateFinancialInformationSection {
     params: Omit<FillFinancialInformationParams, "businessType">,
   ): Promise<void> {
     await this.fillFinancialInformation({ ...params, businessType: "foreign" });
+  }
+
+  async ensureSectionOpen(): Promise<void> {
+    const select = this.getVendorCreateFinancialInformationBusinessTypeSelect();
+    // اگر سلکتور هنوز نمایش داده نشده، روی هدر کلیک کن تا باز شود
+    if (!(await select.isVisible())) {
+      await this.getVendorCreateFinancialInformationHeader().scrollIntoViewIfNeeded();
+      await this.getVendorCreateFinancialInformationHeader().click({
+        force: true,
+      });
+      await select.waitFor({ state: "visible", timeout: 10000 });
+    }
   }
 }

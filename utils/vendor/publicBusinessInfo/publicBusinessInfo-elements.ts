@@ -50,14 +50,15 @@ export const createPublicBusinessInfoElements = (
   vendorCreatePublicBusinessInfoLogo: page.getByText(
     "نشان تجاری کسب و کار (حداکثر حجم قابل قبول ۲ مگابایت)",
   ),
-  vendorCreatePublicBusinessInfoLogoButton: page.locator(".sc-AxirZ").first(),
+  // vendorCreatePublicBusinessInfoLogoButton: page
+  //   .getByTestId("logo-uploader")
+  //   .locator('input[type="file"]'),
   vendorCreatePublicBusinessInfoCover: page.getByText(
     "تصاویر کسب و کار (حداکثر حجم قابل قبول ۲ مگابایت)",
   ),
-  vendorCreatePublicBusinessInfoCoverButton: page
-    .locator(".business-tour__images .sc-AxirZ")
-    .nth(1)
-    .or(page.locator(".sc-AxirZ").nth(1)),
+  // vendorCreatePublicBusinessInfoCoverButton: page
+  //   .getByTestId("images-uploader")
+  //   .locator('input[type="file"]'),
   vendorCreatePublicBusinessInfoNameEmptyAllert: page.getByText(
     "نام کسب و کار ضروری است",
   ),
@@ -67,6 +68,24 @@ export const createPublicBusinessInfoElements = (
   vendorCreatePublicBusinessInfoPOSsystemDropDownEmptyAllert: page.getByText(
     "انتخاب صندوق فروشگاهی ضروری است",
   ),
+  // دکمه/آیکونی که روی صفحه دیده می‌شود:
+  vendorCreatePublicBusinessInfoCoverButton: page
+    .getByTestId("images-uploader")
+    .locator('[tabindex="0"]'), // یا .locator('i.simple-icon-camera')
+
+  // اینپوت فایلی که مخفی است و فقط برای آپلود استفاده می‌شود:
+  vendorCreatePublicBusinessInfoCoverInput: page
+    .getByTestId("images-uploader")
+    .locator('input[type="file"]'),
+
+  // برای لوگو هم به همین شکل:
+  vendorCreatePublicBusinessInfoLogoButton: page
+    .getByTestId("logo-uploader")
+    .locator('[tabindex="0"]'),
+
+  vendorCreatePublicBusinessInfoLogoInput: page
+    .getByTestId("logo-uploader")
+    .locator('input[type="file"]'),
 
   vendorCreatePublicBusinessInfoNameExist: (businessName: string) =>
     page.getByRole("link", { name: businessName, exact: true }),

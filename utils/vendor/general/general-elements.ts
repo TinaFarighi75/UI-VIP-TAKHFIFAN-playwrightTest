@@ -35,7 +35,7 @@ export const createGeneralElements = (page: Page): GeneralObject => ({
   }),
 
   // actions
-  submitButton: page.getByRole("button", { name: "ثبت" }),
+  submitButton: page.locator("button.btn-submit").filter({ hasText: /^ثبت$/ }),
 
   // dialog save buttons
   // (اگر واقعاً دو دیالوگ مختلف دارید، بعداً باید اینها را scoped کنیم؛ فعلاً همان ساختار شما حفظ شد)

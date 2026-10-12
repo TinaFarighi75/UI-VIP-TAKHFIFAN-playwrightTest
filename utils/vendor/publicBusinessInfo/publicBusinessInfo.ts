@@ -108,6 +108,13 @@ export class PublicBusinessInfoSection {
       businessName,
     );
   }
+  getPublicBusinessInfoLogoInput(): Locator {
+    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoLogoInput;
+  }
+
+  getPublicBusinessInfoCoverInput(): Locator {
+    return this.publicBusinessInfo.vendorCreatePublicBusinessInfoCoverInput;
+  }
 
   //---------------------------METHODS (ACTIONS)---------------------------------------
 
@@ -172,22 +179,42 @@ export class PublicBusinessInfoSection {
     await this.getPublicBusinessInfoNameExist(businessName).click();
   }
 
+  // async uploadLogo(filePath: string): Promise<void> {
+  //   const fileChooserPromise = this.page.waitForEvent("filechooser");
+  //   await this.getPublicBusinessInfoLogoInput().click();
+  //   const fileChooser = await fileChooserPromise;
+  //   await fileChooser.setFiles(filePath);
+  // }
   async uploadLogo(filePath: string): Promise<void> {
-    const fileChooserPromise = this.page.waitForEvent("filechooser");
-    await this.getPublicBusinessInfoLogoButton().click();
-    const fileChooser = await fileChooserPromise;
+    const uploader = this.page.getByTestId("logo-uploader");
+    await uploader.scrollIntoViewIfNeeded();
+    await uploader.waitFor({ state: "visible" });
+
+    const [fileChooser] = await Promise.all([
+      this.page.waitForEvent("filechooser"),
+      this.getPublicBusinessInfoLogoButton().click(), // نه CoverInput
+    ]);
     await fileChooser.setFiles(filePath);
   }
-
   // utils/vendor/publicBusinessInfo/publicBusinessInfo.ts
 
+  // async uploadCover(filePath: string): Promise<void> {
+  //   const fileChooserPromise = this.page.waitForEvent("filechooser");
+  //   await this.getPublicBusinessInfoCoverInput().click();
+  //   const fileChooser = await fileChooserPromise;
+  //   await fileChooser.setFiles(filePath);
+  // }
   async uploadCover(filePath: string): Promise<void> {
-    const fileChooserPromise = this.page.waitForEvent("filechooser");
-    await this.getPublicBusinessInfoCoverButton().click();
-    const fileChooser = await fileChooserPromise;
+    const uploader = this.page.getByTestId("images-uploader");
+    await uploader.scrollIntoViewIfNeeded();
+    await uploader.waitFor({ state: "visible" });
+
+    const [fileChooser] = await Promise.all([
+      this.page.waitForEvent("filechooser"),
+      this.getPublicBusinessInfoCoverButton().click(), // نه CoverInput
+    ]);
     await fileChooser.setFiles(filePath);
   }
-
   //---------------------------WAITS---------------------------------------------------
 
   async waitForHeaderVisible(): Promise<void> {

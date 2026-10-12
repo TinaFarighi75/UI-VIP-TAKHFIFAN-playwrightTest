@@ -17,7 +17,7 @@ export class BusinessSearch extends BaseApi {
 
     this.response = await this.request.get(finalUrl, {
       params: {
-        "filters[name]": name,
+        "filters\[name\]": name,
       },
       headers: {
         Accept: "application/json, text/plain, */*",

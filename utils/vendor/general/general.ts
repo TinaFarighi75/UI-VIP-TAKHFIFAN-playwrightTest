@@ -91,9 +91,26 @@ export class General {
   }
 
   async submit(): Promise<void> {
-    await this.getSubmitButton().click();
-  }
+    await this.waitForAllUploadToastsToDisappear();
 
+    await this.page.evaluate(() => {
+      document
+        .querySelectorAll(".Toastify, .toast, .modal-backdrop")
+        .forEach((el) => {
+          (el as HTMLElement).style.pointerEvents = "none";
+        });
+    });
+
+    const submitBtn = this.page.locator("button.btn-submit").filter({
+      hasText: /^ثبت$/,
+    });
+
+    await submitBtn.scrollIntoViewIfNeeded();
+    await submitBtn.waitFor({ state: "visible" });
+
+    // کلیک واقعی DOM (نه pointer Playwright)
+    await submitBtn.evaluate((el: HTMLButtonElement) => el.click());
+  }
   async closeSection(): Promise<void> {
     await this.getCloseSection().click();
   }
