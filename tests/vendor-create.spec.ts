@@ -70,7 +70,7 @@ test.describe("Vendor Create E2E LifeCycle & Sync Flow", () => {
     await expect(vendorCreateApi.general.getVendorCreateButton()).toBeEnabled();
   });
 
-  test("TC02: Vendor Create E2E LifeCycle & Sync Flow with has pos and pic for logo and cover", async ({
+  test("TC02: Vendor Create E2E LifeCycle & Sync Flow with has pos and pic for logo and cover @vendorCreate @smoke @regretion", async ({
     page,
     vendorCreateApi,
     syncFlowApi,
